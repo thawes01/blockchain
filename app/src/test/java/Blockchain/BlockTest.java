@@ -7,8 +7,7 @@ public class BlockTest {
 
     @Test
     void getHashReturnsDefaultHash() {
-        int blockId = 0;
-        PrimaryBlockData primaryBlockData = new PrimaryBlockData(blockId);
+        PrimaryBlockData primaryBlockData = new PrimaryBlockData(0, "0a1b");
         Block block = new Block(primaryBlockData);
         String blockHash = block.getHash();
         assertEquals("0", blockHash);
