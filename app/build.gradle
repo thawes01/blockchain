@@ -38,4 +38,10 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+test {
+    testLogging {
+        events "failed", "skipped"
+    }
+}
+
 version = '0.0.1'
