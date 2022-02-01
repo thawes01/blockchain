@@ -1,19 +1,31 @@
 package Blockchain;
 
+import static Blockchain.testUtils.Time.*;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.time.*;
 
 public class StopClockTest {
-    private final ZoneId DEFAULT_ZONE = ZoneId.systemDefault();
 
     @ParameterizedTest
     @ValueSource(longs = {1L, 2L})
     void nowReturnsNowTimeOfSuppliedClock(long creationTimeMillis) {
-        Instant creationInstant = Instant.ofEpochMilli(creationTimeMillis);
-        Clock clock = Clock.fixed(creationInstant, DEFAULT_ZONE);
+        Clock clock = defaultFixedClock(creationTimeMillis);
         StopClock stopClock = new StopClock(clock);
         assertEquals(creationTimeMillis, stopClock.now());
+    }
+
+    @Test
+    void systemUTCUsesClockSystemUTCMethod() {
+        try (MockedStatic<Clock> mockedClock = Mockito.mockStatic(Clock.class)) {
+            StopClock stopClock = StopClock.systemUTC();
+            mockedClock.verify(Clock::systemUTC);
+        }
     }
 }
