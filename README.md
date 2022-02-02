@@ -2,8 +2,39 @@
 
 A toy project that creates blockchains.
 
-This is being developed as a solution to the Blockchain project for the Java
-Core track of [JetBrains Academy](https://hyperskill.org/tracks).
+Author: Thomas Hawes, with code snippets obtained from the [JetBrains Academy](https://hyperskill.org/tracks)
+learning platform.
+
+This code is being developed as a solution to the Blockchain project for the
+Java Core track of the educational platform [JetBrains Academy](https://hyperskill.org/tracks).
+The main purpose is to showcase the author's software capabilities and
+knowledge.
+
+
+## Contents
+
+[No licence](#no-licence)
+
+[Running the app](#running-the-app)
+
+
+## No licence
+
+**This repository deliberately contains no licence.** This is because it contains
+code samples taken from the JetBrains Academy platform, which are provided for
+non-commercial use. References to the origin of such code samples are made in
+the relevant source code files.
+
+You are permitted to view, fork, download and run the software in this
+repository, so long as these activities are for non-commercial purposes.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 
 ## Running the app
 
@@ -31,10 +62,10 @@ a local Java distribution. Generate the JAR file using the following command:
 ```shell
 ./gradlew jar
 ```
-This will generate the file in `./app/build/libs/app-0.0.1.jar`. This can then
+This will generate the file in `./app/build/libs/app-0.1.0.jar`. This can then
 be run in the usual way:
 ```shell
-java -jar app/build/libs/app-0.0.1.jar
+java -jar app/build/libs/app-0.1.0.jar
 ```
 
 
@@ -46,7 +77,7 @@ distribution by running
 ```shell
 ./gradlew assemble
 ```
-This will generate archives `app-0.0.1.tar` and `app-0.0.1.zip` of the
+This will generate archives `app-0.1.0.tar` and `app-0.1.0.zip` of the
 application in the directory `./app/build/distributions`. Unpack the archive of
 your choice and then run the `bin/app` shell script (or `bin\app.batch` script)
 within. 
