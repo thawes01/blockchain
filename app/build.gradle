@@ -9,8 +9,9 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    // Use JUnit Jupiter for testing and Mockito for mocking.
+    testImplementation 'org.junit.jupiter:junit-jupiter:+'
+    testImplementation 'org.mockito:mockito-inline:+'
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.0.1-jre'
@@ -38,4 +39,10 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-version = '0.0.1'
+test {
+    testLogging {
+        events "failed", "skipped"
+    }
+}
+
+version = '0.1.0'
