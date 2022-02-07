@@ -15,4 +15,9 @@ public class BlockCreator {
     public static Block withBasicBlockData(BasicBlockData basicBlockData) {
         return new Block(basicBlockData, DUMMY_STOPCLOCK);
     }
+
+    public static Block firstBlockInBlockchain() {
+        BasicBlockData basicBlockData = new BasicBlockData(0, "0");
+        return new Block(basicBlockData, DUMMY_STOPCLOCK);
+    }
 }
