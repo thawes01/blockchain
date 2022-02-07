@@ -26,4 +26,31 @@ public class Block {
         return String.format("%s%s%s", basicBlockData.getId(),
                 basicBlockData.getCreationTimestamp(), basicBlockData.getPreviousBlockHash());
     }
+
+    /**
+     * Gets the ID of the block.
+     *
+     * @return the ID of the block.
+     */
+    public int getId() {
+        return basicBlockData.getId();
+    }
+
+    /**
+     * Gets the timestamp marking the creation time of this block.
+     *
+     * @return the timestamp marking the creation time of this block.
+     */
+    public long getCreationTimestamp() {
+        return basicBlockData.getCreationTimestamp();
+    }
+
+    /**
+     * Gets the hash of the previous block.
+     *
+     * @return the hash of the previous block.
+     */
+    public String getPreviousBlockHash() {
+        return basicBlockData.getPreviousBlockHash();
+    }
 }

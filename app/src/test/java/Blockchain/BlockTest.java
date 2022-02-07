@@ -3,6 +3,9 @@ package Blockchain;
 import static Blockchain.testUtils.Time.defaultFixedClock;
 import static Blockchain.testUtils.BasicBlockDataCreator.defaultBasicBlockData;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlockTest {
@@ -54,5 +57,27 @@ public class BlockTest {
         BasicBlockData basicBlockData1 = defaultBasicBlockData(stopClock1);
         BasicBlockData basicBlockData2 = defaultBasicBlockData(stopClock2);
         assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void getIdReturnsId(int id) {
+        Block block = new Block(defaultBasicBlockData(id));
+        assertEquals(id, block.getId());
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = {10L, 20L})
+    void getCreationTimestampReturnsTimestamp(long creationTimestamp) {
+        StopClock stopClock = new StopClock(defaultFixedClock(creationTimestamp));
+        Block block = new Block(defaultBasicBlockData(stopClock));
+        assertEquals(creationTimestamp, block.getCreationTimestamp());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"a1", "b2"})
+    void getPreviousBlockHashReturnsPreviousBlockHash(String previousBlockHash) {
+        Block block = new Block(defaultBasicBlockData(previousBlockHash));
+        assertEquals(previousBlockHash, block.getPreviousBlockHash());
     }
 }
