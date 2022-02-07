@@ -1,9 +1,7 @@
 package Blockchain;
 
 public class Block {
-    private final int id;
-    private final String previousBlockHash;
-    private final long creationTimestamp;
+    private final BasicBlockData basicBlockData;
 
     /**
      * Allocates a {@code Block} in a blockchain.
@@ -12,9 +10,7 @@ public class Block {
      *                        the block's hash is generated
      */
     public Block(BasicBlockData basicBlockData) {
-        this.id = basicBlockData.getId();
-        this.previousBlockHash = basicBlockData.getPreviousBlockHash();
-        this.creationTimestamp = basicBlockData.getCreationTimestamp();
+        this.basicBlockData = basicBlockData;
     }
 
     /**
@@ -27,6 +23,7 @@ public class Block {
     }
 
     private String stringRepresentation() {
-        return String.format("%s%s%s", id, creationTimestamp, previousBlockHash);
+        return String.format("%s%s%s", basicBlockData.getId(),
+                basicBlockData.getCreationTimestamp(), basicBlockData.getPreviousBlockHash());
     }
 }
