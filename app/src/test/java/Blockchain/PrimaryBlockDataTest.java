@@ -33,20 +33,20 @@ class PrimaryBlockDataTest {
 
     @ParameterizedTest
     @ValueSource(longs = {1L, 2L})
-    void getTimestampReturnsMillisFromEpoch(long creationTimeMillis) {
+    void getCreationTimestampReturnsMillisFromEpoch(long creationTimeMillis) {
         Clock clock = defaultFixedClock(creationTimeMillis);
         StopClock stopClock = new StopClock(clock);
         PrimaryBlockData primaryBlockData = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, stopClock);
-        assertEquals(creationTimeMillis, primaryBlockData.getTimestamp());
+        assertEquals(creationTimeMillis, primaryBlockData.getCreationTimestamp());
     }
 
     @Test
-    void timestampRecordsCreationTime() {
+    void creationTimestampRecordsCreationTime() {
         long creationTime = 1234L;
         StopClock mockedFixedStopClock = Mockito.mock(StopClock.class);
         Mockito.when(mockedFixedStopClock.now()).thenReturn(creationTime);
         PrimaryBlockData primaryBlockData = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, mockedFixedStopClock);
         Mockito.verify(mockedFixedStopClock).now();
-        assertEquals(creationTime, primaryBlockData.getTimestamp());
+        assertEquals(creationTime, primaryBlockData.getCreationTimestamp());
     }
 }

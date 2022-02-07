@@ -14,7 +14,7 @@ public class Block {
     public Block(PrimaryBlockData primaryData) {
         this.id = primaryData.getId();
         this.previousBlockHash = primaryData.getPreviousBlockHash();
-        this.creationTimestamp = primaryData.getTimestamp();
+        this.creationTimestamp = primaryData.getCreationTimestamp();
     }
 
     /**

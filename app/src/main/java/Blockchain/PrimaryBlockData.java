@@ -3,7 +3,7 @@ package Blockchain;
 public class PrimaryBlockData {
     private final int id;
     private final String previousBlockHash;
-    private final long timestamp;
+    private final long creationTimestamp;
 
     /**
      * Allocates a {@code PrimaryBlockData} object with an ID number and the
@@ -18,7 +18,7 @@ public class PrimaryBlockData {
     public PrimaryBlockData(int id, String previousBlockHash, StopClock stopClock) {
         this.id = id;
         this.previousBlockHash = previousBlockHash;
-        this.timestamp = stopClock.now();
+        this.creationTimestamp = stopClock.now();
     }
 
     /**
@@ -49,7 +49,7 @@ public class PrimaryBlockData {
      *
      * @return  the time that the block data was created
      */
-    public long getTimestamp() {
-        return this.timestamp;
+    public long getCreationTimestamp() {
+        return this.creationTimestamp;
     }
 }
