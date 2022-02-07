@@ -1,20 +1,16 @@
 package Blockchain;
 
 import static Blockchain.testUtils.Time.*;
+import static Blockchain.testUtils.BasicBlockDataCreator.defaultBasicBlockData;
 import org.junit.jupiter.api.*;
-import java.time.Clock;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlockTest {
-    private static final int DUMMY_ID = 0;
-    private static final String DUMMY_HASH = "0a1b";
-    private static final StopClock DUMMY_STOPCLOCK = new StopClock(Clock.systemUTC());
     private static final int HASH_LENGTH = 64;
 
     @Test
     void getHashReturnsStringOfCorrectLength() {
-        BasicBlockData basicBlockData = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        Block block = new Block(basicBlockData);
+        Block block = new Block(defaultBasicBlockData());
         String blockHash = block.computeHash();
         assertEquals(HASH_LENGTH, blockHash.length());
     }
@@ -30,26 +26,24 @@ public class BlockTest {
 
     @Test
     void equalBlocksGiveSameHash() {
-        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        Block block1 = new Block(basicBlockData1);
-        Block block2 = new Block(basicBlockData2);
+        Block block1 = new Block(defaultBasicBlockData());
+        Block block2 = new Block(defaultBasicBlockData());
         assertEquals(block1.computeHash(), block2.computeHash());
     }
 
     @Test
     void getHashChangesWithDifferentID() {
         int id1 = 0, id2 = 1;
-        BasicBlockData basicBlockData1 = new BasicBlockData(id1, DUMMY_HASH, DUMMY_STOPCLOCK);
-        BasicBlockData basicBlockData2 = new BasicBlockData(id2, DUMMY_HASH, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData1 = defaultBasicBlockData(id1);
+        BasicBlockData basicBlockData2 = defaultBasicBlockData(id2);
         assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 
     @Test
     void getHashChangesWithDifferentPreviousBlockHash() {
         String previousBlockHash1 = "a1", previousBlockHash2 = "b2";
-        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, previousBlockHash1, DUMMY_STOPCLOCK);
-        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, previousBlockHash2, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData1 = defaultBasicBlockData(previousBlockHash1);
+        BasicBlockData basicBlockData2 = defaultBasicBlockData(previousBlockHash2);
         assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 
@@ -57,8 +51,8 @@ public class BlockTest {
     void getHashChangesWithDifferentTimestamp() {
         StopClock stopClock1 = new StopClock(defaultFixedClock(1L));
         StopClock stopClock2 = new StopClock(defaultFixedClock(2L));
-        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, stopClock1);
-        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, stopClock2);
+        BasicBlockData basicBlockData1 = defaultBasicBlockData(stopClock1);
+        BasicBlockData basicBlockData2 = defaultBasicBlockData(stopClock2);
         assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 }

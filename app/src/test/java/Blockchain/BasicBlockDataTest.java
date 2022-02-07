@@ -1,6 +1,7 @@
 package Blockchain;
 
 import static Blockchain.testUtils.Time.*;
+import static Blockchain.testUtils.BasicBlockDataCreator.defaultBasicBlockData;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,14 +12,11 @@ import java.time.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BasicBlockDataTest {
-    private static final int DUMMY_ID = 0;
-    private static final String DUMMY_HASH = "0a1b";
-    private static final StopClock DUMMY_STOPCLOCK = new StopClock(Clock.systemUTC());
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2})
     void getIdReturnsSuppliedID(int id) {
-        BasicBlockData basicBlockData = new BasicBlockData(id, DUMMY_HASH, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData = defaultBasicBlockData(id);
         int returnedId = basicBlockData.getId();
         assertEquals(id, returnedId);
     }
@@ -26,7 +24,7 @@ class BasicBlockDataTest {
     @ParameterizedTest
     @ValueSource(strings = {"0011", "a345"})
     void getPreviousBlockHashReturnsSuppliedHash(String previousBlockHash) {
-        BasicBlockData basicBlockData = new BasicBlockData(DUMMY_ID, previousBlockHash, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData = defaultBasicBlockData(previousBlockHash);
         String returnedPreviousBlockHash = basicBlockData.getPreviousBlockHash();
         assertEquals(previousBlockHash, returnedPreviousBlockHash);
     }
@@ -36,7 +34,7 @@ class BasicBlockDataTest {
     void getCreationTimestampReturnsMillisFromEpoch(long creationTimeMillis) {
         Clock clock = defaultFixedClock(creationTimeMillis);
         StopClock stopClock = new StopClock(clock);
-        BasicBlockData basicBlockData = new BasicBlockData(DUMMY_ID, DUMMY_HASH, stopClock);
+        BasicBlockData basicBlockData = defaultBasicBlockData(stopClock);
         assertEquals(creationTimeMillis, basicBlockData.getCreationTimestamp());
     }
 
@@ -45,7 +43,7 @@ class BasicBlockDataTest {
         long creationTime = 1234L;
         StopClock mockedFixedStopClock = Mockito.mock(StopClock.class);
         Mockito.when(mockedFixedStopClock.now()).thenReturn(creationTime);
-        BasicBlockData basicBlockData = new BasicBlockData(DUMMY_ID, DUMMY_HASH, mockedFixedStopClock);
+        BasicBlockData basicBlockData = defaultBasicBlockData(mockedFixedStopClock);
         Mockito.verify(mockedFixedStopClock).now();
         assertEquals(creationTime, basicBlockData.getCreationTimestamp());
     }
