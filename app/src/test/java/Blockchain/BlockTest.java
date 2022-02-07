@@ -1,7 +1,7 @@
 package Blockchain;
 
 import static Blockchain.testUtils.Time.defaultFixedClock;
-import static Blockchain.testUtils.BasicBlockDataCreator.defaultBasicBlockData;
+import Blockchain.testUtils.BasicBlockDataCreator;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -15,7 +15,7 @@ public class BlockTest {
 
     @Test
     void getHashReturnsStringOfCorrectLength() {
-        Block block = new Block(defaultBasicBlockData(), DUMMY_STOPCLOCK);
+        Block block = new Block(BasicBlockDataCreator.withDefaultArgs(), DUMMY_STOPCLOCK);
         String blockHash = block.computeHash();
 
         assertEquals(HASH_LENGTH, blockHash.length());
@@ -30,8 +30,8 @@ public class BlockTest {
 
     @Test
     void equalBlocksGiveSameHash() {
-        Block block1 = new Block(defaultBasicBlockData(), DUMMY_STOPCLOCK);
-        Block block2 = new Block(defaultBasicBlockData(), DUMMY_STOPCLOCK);
+        Block block1 = new Block(BasicBlockDataCreator.withDefaultArgs(), DUMMY_STOPCLOCK);
+        Block block2 = new Block(BasicBlockDataCreator.withDefaultArgs(), DUMMY_STOPCLOCK);
 
         assertEquals(block1.computeHash(), block2.computeHash());
     }
@@ -39,8 +39,8 @@ public class BlockTest {
     @Test
     void getHashChangesWithDifferentID() {
         int id1 = 0, id2 = 1;
-        Block block1 = new Block(defaultBasicBlockData(id1), DUMMY_STOPCLOCK);
-        Block block2 = new Block(defaultBasicBlockData(id2), DUMMY_STOPCLOCK);
+        Block block1 = new Block(BasicBlockDataCreator.withId(id1), DUMMY_STOPCLOCK);
+        Block block2 = new Block(BasicBlockDataCreator.withId(id2), DUMMY_STOPCLOCK);
 
         assertBlockHashesNotEqual(block1, block2);
     }
@@ -48,9 +48,9 @@ public class BlockTest {
     @Test
     void getHashChangesWithDifferentPreviousBlockHash() {
         String previousBlockHash1 = "a1", previousBlockHash2 = "b2";
-        Block block1 = new Block(defaultBasicBlockData(previousBlockHash1),
+        Block block1 = new Block(BasicBlockDataCreator.withPreviousBlockHash(previousBlockHash1),
                 DUMMY_STOPCLOCK);
-        Block block2 = new Block(defaultBasicBlockData(previousBlockHash2),
+        Block block2 = new Block(BasicBlockDataCreator.withPreviousBlockHash(previousBlockHash2),
                 DUMMY_STOPCLOCK);
 
         assertBlockHashesNotEqual(block1, block2);
@@ -60,7 +60,7 @@ public class BlockTest {
     void getHashChangesWithDifferentTimestamp() {
         StopClock stopClock1 = new StopClock(defaultFixedClock(1L));
         StopClock stopClock2 = new StopClock(defaultFixedClock(2L));
-        BasicBlockData basicBlockData = defaultBasicBlockData();
+        BasicBlockData basicBlockData = BasicBlockDataCreator.withDefaultArgs();
         Block block1 = new Block(basicBlockData, stopClock1);
         Block block2 = new Block(basicBlockData, stopClock2);
 
@@ -70,7 +70,7 @@ public class BlockTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1})
     void getIdReturnsId(int id) {
-        Block block = new Block(defaultBasicBlockData(id), DUMMY_STOPCLOCK);
+        Block block = new Block(BasicBlockDataCreator.withId(id), DUMMY_STOPCLOCK);
 
         assertEquals(id, block.getId());
     }
@@ -79,7 +79,7 @@ public class BlockTest {
     @ValueSource(longs = {10L, 20L})
     void getCreationTimestampReturnsMillisFromEpoch(long creationTimestamp) {
         StopClock stopClock = new StopClock(defaultFixedClock(creationTimestamp));
-        Block block = new Block(defaultBasicBlockData(), stopClock);
+        Block block = new Block(BasicBlockDataCreator.withDefaultArgs(), stopClock);
 
         assertEquals(creationTimestamp, block.getCreationTimestamp());
     }
@@ -89,7 +89,7 @@ public class BlockTest {
         long creationTime = 1234L;
         StopClock mockedFixedStopClock = Mockito.mock(StopClock.class);
         Mockito.when(mockedFixedStopClock.now()).thenReturn(creationTime);
-        BasicBlockData basicBlockData = defaultBasicBlockData();
+        BasicBlockData basicBlockData = BasicBlockDataCreator.withDefaultArgs();
 
         Mockito.verify(mockedFixedStopClock, Mockito.atMost(0)).now();
         Block block = new Block(basicBlockData, mockedFixedStopClock);
@@ -101,7 +101,7 @@ public class BlockTest {
     @ParameterizedTest
     @ValueSource(strings = {"a1", "b2"})
     void getPreviousBlockHashReturnsPreviousBlockHash(String previousBlockHash) {
-        Block block = new Block(defaultBasicBlockData(previousBlockHash), DUMMY_STOPCLOCK);
+        Block block = new Block(BasicBlockDataCreator.withPreviousBlockHash(previousBlockHash), DUMMY_STOPCLOCK);
 
         assertEquals(previousBlockHash, block.getPreviousBlockHash());
     }
