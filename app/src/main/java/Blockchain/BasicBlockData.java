@@ -1,12 +1,12 @@
 package Blockchain;
 
-public class PrimaryBlockData {
+public class BasicBlockData {
     private final int id;
     private final String previousBlockHash;
     private final long creationTimestamp;
 
     /**
-     * Allocates a {@code PrimaryBlockData} object with an ID number and the
+     * Allocates a {@code BasicBlockData} object with an ID number and the
      * hash of a previous block.
      *
      * Uses a {@link StopClock} to capture the creation time of this object.
@@ -15,7 +15,7 @@ public class PrimaryBlockData {
      * @param previousBlockHash  the hash of a previous block in a blockchain
      * @param stopClock  used to record the creation time of the block
      */
-    public PrimaryBlockData(int id, String previousBlockHash, StopClock stopClock) {
+    public BasicBlockData(int id, String previousBlockHash, StopClock stopClock) {
         this.id = id;
         this.previousBlockHash = previousBlockHash;
         this.creationTimestamp = stopClock.now();

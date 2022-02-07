@@ -13,16 +13,16 @@ public class BlockTest {
 
     @Test
     void getHashReturnsStringOfCorrectLength() {
-        PrimaryBlockData primaryBlockData = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        Block block = new Block(primaryBlockData);
+        BasicBlockData basicBlockData = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
+        Block block = new Block(basicBlockData);
         String blockHash = block.computeHash();
         assertEquals(HASH_LENGTH, blockHash.length());
     }
 
-    private void assertResultingBlockHashesNotEqual(PrimaryBlockData primaryBlockData1,
-                                                    PrimaryBlockData primaryBlockData2) {
-        Block block1 = new Block(primaryBlockData1);
-        Block block2 = new Block(primaryBlockData2);
+    private void assertResultingBlockHashesNotEqual(BasicBlockData basicBlockData1,
+                                                    BasicBlockData basicBlockData2) {
+        Block block1 = new Block(basicBlockData1);
+        Block block2 = new Block(basicBlockData2);
         String blockHash1 = block1.computeHash();
         String blockHash2 = block2.computeHash();
         assertNotEquals(blockHash1, blockHash2);
@@ -30,35 +30,35 @@ public class BlockTest {
 
     @Test
     void equalBlocksGiveSameHash() {
-        PrimaryBlockData primaryBlockData1 = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        PrimaryBlockData primaryBlockData2 = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
-        Block block1 = new Block(primaryBlockData1);
-        Block block2 = new Block(primaryBlockData2);
+        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, DUMMY_STOPCLOCK);
+        Block block1 = new Block(basicBlockData1);
+        Block block2 = new Block(basicBlockData2);
         assertEquals(block1.computeHash(), block2.computeHash());
     }
 
     @Test
     void getHashChangesWithDifferentID() {
         int id1 = 0, id2 = 1;
-        PrimaryBlockData primaryBlockData1 = new PrimaryBlockData(id1, DUMMY_HASH, DUMMY_STOPCLOCK);
-        PrimaryBlockData primaryBlockData2 = new PrimaryBlockData(id2, DUMMY_HASH, DUMMY_STOPCLOCK);
-        assertResultingBlockHashesNotEqual(primaryBlockData1, primaryBlockData2);
+        BasicBlockData basicBlockData1 = new BasicBlockData(id1, DUMMY_HASH, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData2 = new BasicBlockData(id2, DUMMY_HASH, DUMMY_STOPCLOCK);
+        assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 
     @Test
     void getHashChangesWithDifferentPreviousBlockHash() {
         String previousBlockHash1 = "a1", previousBlockHash2 = "b2";
-        PrimaryBlockData primaryBlockData1 = new PrimaryBlockData(DUMMY_ID, previousBlockHash1, DUMMY_STOPCLOCK);
-        PrimaryBlockData primaryBlockData2 = new PrimaryBlockData(DUMMY_ID, previousBlockHash2, DUMMY_STOPCLOCK);
-        assertResultingBlockHashesNotEqual(primaryBlockData1, primaryBlockData2);
+        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, previousBlockHash1, DUMMY_STOPCLOCK);
+        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, previousBlockHash2, DUMMY_STOPCLOCK);
+        assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 
     @Test
     void getHashChangesWithDifferentTimestamp() {
         StopClock stopClock1 = new StopClock(defaultFixedClock(1L));
         StopClock stopClock2 = new StopClock(defaultFixedClock(2L));
-        PrimaryBlockData primaryBlockData1 = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, stopClock1);
-        PrimaryBlockData primaryBlockData2 = new PrimaryBlockData(DUMMY_ID, DUMMY_HASH, stopClock2);
-        assertResultingBlockHashesNotEqual(primaryBlockData1, primaryBlockData2);
+        BasicBlockData basicBlockData1 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, stopClock1);
+        BasicBlockData basicBlockData2 = new BasicBlockData(DUMMY_ID, DUMMY_HASH, stopClock2);
+        assertResultingBlockHashesNotEqual(basicBlockData1, basicBlockData2);
     }
 }

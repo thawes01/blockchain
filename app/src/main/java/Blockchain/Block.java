@@ -8,13 +8,13 @@ public class Block {
     /**
      * Allocates a {@code Block} in a blockchain.
      *
-     * @param primaryData  the data contained within the block, from which the
-     *                     block's hash is generated
+     * @param basicBlockData  the data contained within the block, from which
+     *                        the block's hash is generated
      */
-    public Block(PrimaryBlockData primaryData) {
-        this.id = primaryData.getId();
-        this.previousBlockHash = primaryData.getPreviousBlockHash();
-        this.creationTimestamp = primaryData.getCreationTimestamp();
+    public Block(BasicBlockData basicBlockData) {
+        this.id = basicBlockData.getId();
+        this.previousBlockHash = basicBlockData.getPreviousBlockHash();
+        this.creationTimestamp = basicBlockData.getCreationTimestamp();
     }
 
     /**
