@@ -1,20 +1,16 @@
 package Blockchain;
 
 public class Block {
-    private final int id;
-    private final String previousBlockHash;
-    private final long creationTimestamp;
+    private final BasicBlockData basicBlockData;
 
     /**
      * Allocates a {@code Block} in a blockchain.
      *
-     * @param primaryData  the data contained within the block, from which the
-     *                     block's hash is generated
+     * @param basicBlockData  the data contained within the block, from which
+     *                        the block's hash is generated
      */
-    public Block(PrimaryBlockData primaryData) {
-        this.id = primaryData.getId();
-        this.previousBlockHash = primaryData.getPreviousBlockHash();
-        this.creationTimestamp = primaryData.getTimestamp();
+    public Block(BasicBlockData basicBlockData) {
+        this.basicBlockData = basicBlockData;
     }
 
     /**
@@ -27,6 +23,7 @@ public class Block {
     }
 
     private String stringRepresentation() {
-        return String.format("%s%s%s", id, creationTimestamp, previousBlockHash);
+        return String.format("%s%s%s", basicBlockData.getId(),
+                basicBlockData.getCreationTimestamp(), basicBlockData.getPreviousBlockHash());
     }
 }
