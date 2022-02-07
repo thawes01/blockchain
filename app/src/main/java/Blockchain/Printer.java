@@ -8,7 +8,7 @@ public class Printer {
     /**
      * Allocates a {@code Printer} for printing information about blockchains.
      *
-     * @param printStream a stream to print the information to.
+     * @param printStream  a stream to print the information to.
      */
     public Printer(PrintStream printStream) {
         this.printStream = printStream;
@@ -17,7 +17,7 @@ public class Printer {
     /**
      * Print information about a block to this {@code Printer}'s stream.
      *
-     * @param block a block to print information about.
+     * @param block  a block to print information about.
      */
     public void print(Block block) {
         String output = String.format("Id: %d\n", block.getId()) +

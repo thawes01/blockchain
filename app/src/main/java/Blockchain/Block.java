@@ -33,7 +33,7 @@ public class Block {
     /**
      * Gets the ID of the block.
      *
-     * @return the ID of the block.
+     * @return  the ID of the block.
      */
     public int getId() {
         return basicBlockData.getId();
@@ -42,7 +42,7 @@ public class Block {
     /**
      * Gets the hash of the previous block.
      *
-     * @return the hash of the previous block.
+     * @return  the hash of the previous block.
      */
     public String getPreviousBlockHash() {
         return basicBlockData.getPreviousBlockHash();
