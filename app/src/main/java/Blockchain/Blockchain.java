@@ -1,9 +1,12 @@
 package Blockchain;
 
-public class Blockchain {
+import java.util.*;
+
+public class Blockchain implements Iterable<Block> {
     private static final String EXPECTED_STARTING_HASH = "0";
     private Block lastBlock;
     private Block penultimateBlock;
+    private final List<Block> blocks = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
 
@@ -13,6 +16,7 @@ public class Blockchain {
      * @param block  a block to add to the end of the chain
      */
     public void push(Block block) {
+        blocks.add(block);
         penultimateBlock = lastBlock;
         lastBlock = block;
         updateVerification();
@@ -48,5 +52,9 @@ public class Blockchain {
 
     public boolean verify() {
         return startingHashCorrect && successiveBlockHashesAgree;
+    }
+
+    public Iterator<Block> iterator() {
+        return blocks.iterator();
     }
 }

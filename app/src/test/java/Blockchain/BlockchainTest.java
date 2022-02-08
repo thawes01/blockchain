@@ -5,6 +5,8 @@ import Blockchain.testUtils.BasicBlockDataCreator;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import java.util.Iterator;
+
 public class BlockchainTest {
     private Blockchain blockchain;
 
@@ -81,5 +83,23 @@ public class BlockchainTest {
         blockchain.push(block3);
 
         assertFalse(blockchain.verify());
+    }
+
+    @Test
+    void iteratorYieldsBlocksFromBlockchainInOrder() {
+        Block block1 = BlockCreator.firstBlockInBlockchain();
+        BasicBlockData basicBlockData2 = new BasicBlockData(1, "999");
+        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
+        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2.computeHash());
+        Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
+        blockchain.push(block1);
+        blockchain.push(block2);
+        blockchain.push(block3);
+
+        Iterator<Block> blockIterator = blockchain.iterator();
+
+        assertEquals(block1, blockIterator.next());
+        assertEquals(block2, blockIterator.next());
+        assertEquals(block3, blockIterator.next());
     }
 }
