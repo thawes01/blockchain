@@ -16,6 +16,14 @@ public class BlockCreator {
         return new Block(basicBlockData, DUMMY_STOPCLOCK);
     }
 
+    /** Useful for creating multiple {@code Block}s in quick succession, which
+     * can result in the same creation time being returned by the default
+     * system clock. */
+    public static Block withCreationTimestamp(long creationTimestamp) {
+        StopClock stopClock = new StopClock(Time.defaultFixedClock(creationTimestamp));
+        return new Block(DUMMY_BASIC_DATA, stopClock);
+    }
+
     public static Block firstBlockInBlockchain() {
         BasicBlockData basicBlockData = new BasicBlockData(0, "0");
         return new Block(basicBlockData, DUMMY_STOPCLOCK);
