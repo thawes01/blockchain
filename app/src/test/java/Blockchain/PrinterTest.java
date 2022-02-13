@@ -13,6 +13,9 @@ import java.io.PrintStream;
 public class PrinterTest {
     private ByteArrayOutputStream outputStream;
     private PrintStream printStream;
+    private final String initialHash = "0";
+    private final int firstBlockId = 0;
+    private final BasicBlockData firstBlockData = new BasicBlockData(firstBlockId, initialHash);
 
     @BeforeEach
     void setUpOutputStreams() {
@@ -56,8 +59,8 @@ public class PrinterTest {
 
     @Test
     void printWritesBlockchainWithSingleBlockInExpectedFormat() {
-        Block block = BlockCreator.firstBlockInBlockchain();
-        Blockchain blockchain = new Blockchain();
+        Block block = BlockCreator.withBasicBlockData(firstBlockData);
+        Blockchain blockchain = new Blockchain(initialHash);
         blockchain.push(block);
         Printer printer = new Printer(printStream);
 
@@ -71,10 +74,10 @@ public class PrinterTest {
 
     @Test
     void printWritesBlockchainWithMultipleBlocksInExpectedFormat() {
-        Block block1 = BlockCreator.firstBlockInBlockchain();
+        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
         Block block2 = BlockCreator.withCreationTimestamp(1L);
         Block block3 = BlockCreator.withCreationTimestamp(2L);
-        Blockchain blockchain = new Blockchain();
+        Blockchain blockchain = new Blockchain(initialHash);
         blockchain.push(block1);
         blockchain.push(block2);
         blockchain.push(block3);
