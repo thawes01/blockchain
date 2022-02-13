@@ -4,6 +4,8 @@ import Blockchain.testUtils.BlockCreator;
 import Blockchain.testUtils.BasicBlockDataCreator;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Iterator;
 
@@ -101,5 +103,16 @@ public class BlockchainTest {
         assertEquals(block1, blockIterator.next());
         assertEquals(block2, blockIterator.next());
         assertEquals(block3, blockIterator.next());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void getLengthReturnsNumberOfBlocksInBlockchain(int numBlocks) {
+        Blockchain blockchain = new Blockchain();
+        for (int i = 0; i < numBlocks; i++) {
+            blockchain.push(BlockCreator.firstBlockInBlockchain());
+        }
+
+        assertEquals(numBlocks, blockchain.getLength());
     }
 }

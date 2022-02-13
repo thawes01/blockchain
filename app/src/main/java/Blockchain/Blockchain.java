@@ -6,6 +6,7 @@ public class Blockchain implements Iterable<Block> {
     private static final String EXPECTED_STARTING_HASH = "0";
     private Block lastBlock;
     private Block penultimateBlock;
+    private int length = 0;
     private final List<Block> blocks = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
@@ -19,6 +20,7 @@ public class Blockchain implements Iterable<Block> {
         blocks.add(block);
         penultimateBlock = lastBlock;
         lastBlock = block;
+        length++;
         updateVerification();
     }
 
@@ -56,5 +58,14 @@ public class Blockchain implements Iterable<Block> {
 
     public Iterator<Block> iterator() {
         return blocks.iterator();
+    }
+
+    /**
+     * Returns the number of blocks in this blockchain.
+     *
+     * @return  the number of blocks
+     */
+    public int getLength() {
+        return length;
     }
 }
