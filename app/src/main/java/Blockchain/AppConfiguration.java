@@ -1,15 +1,31 @@
 package Blockchain;
 
+import java.io.PrintStream;
+
 public class AppConfiguration {
-    private final String initialHash = "0";
+    private final int numberOfBlocks = 5;
+    private PrintStream printStream = System.out;
 
     /**
-     * Returns the initial hash that is used for the "previous block's hash"
-     * record in the first block in a blockchain.
+     * Gets the number of blocks to generate in this application's blockchain.
      *
-     * @return  the initial hash
+     * @return  the number of blocks in this application's blockchain.
      */
-    public String getInitialHash() {
-        return initialHash;
+    public int getNumberOfBlocks() {
+        return numberOfBlocks;
+    }
+
+    /**
+     * Gets the print stream to capture this application's output.
+     *
+     * @return  the print stream capturing application output
+     */
+    public PrintStream getPrintStream() {
+        return printStream;
+    }
+
+    /** Sets the print stream for capturing this application's output. */
+    void setPrintStream(PrintStream printStream) {
+        this.printStream = printStream;
     }
 }
