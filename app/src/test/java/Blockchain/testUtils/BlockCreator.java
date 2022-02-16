@@ -23,9 +23,4 @@ public class BlockCreator {
         StopClock stopClock = new StopClock(Time.defaultFixedClock(creationTimestamp));
         return new Block(DUMMY_BASIC_DATA, stopClock);
     }
-
-    public static Block firstBlockInBlockchain() {
-        BasicBlockData basicBlockData = new BasicBlockData(0, "0");
-        return new Block(basicBlockData, DUMMY_STOPCLOCK);
-    }
 }

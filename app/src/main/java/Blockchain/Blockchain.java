@@ -3,12 +3,27 @@ package Blockchain;
 import java.util.*;
 
 public class Blockchain implements Iterable<Block> {
-    private static final String EXPECTED_STARTING_HASH = "0";
+    private final String initialHash;
     private Block lastBlock;
+    private String lastBlockHash;
     private Block penultimateBlock;
+    private int length = 0;
     private final List<Block> blocks = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
+
+    /**
+     * Allocates a {@code Blockchain} with a specified initial hash.
+     *
+     * The initial hash is used to populate the "previous block's hash" for the
+     * first block in this blockchain.
+     *
+     * @param initialHash  an initial hash to use for the first block
+     */
+    public Blockchain(String initialHash) {
+        this.initialHash = initialHash;
+        lastBlockHash = initialHash;
+    }
 
     /**
      * Adds a block to the end of this blockchain.
@@ -17,9 +32,19 @@ public class Blockchain implements Iterable<Block> {
      */
     public void push(Block block) {
         blocks.add(block);
+        updateBlockCaches(block);
+        updateLength();
+        updateVerification();
+    }
+
+    private void updateBlockCaches(Block block) {
         penultimateBlock = lastBlock;
         lastBlock = block;
-        updateVerification();
+        lastBlockHash = lastBlock.computeHash();
+    }
+
+    private void updateLength() {
+        length++;
     }
 
     private void updateVerification() {
@@ -32,7 +57,7 @@ public class Blockchain implements Iterable<Block> {
 
     private void updateStartingHashCorrect() {
         String lastBlockPreviousHash = lastBlock.getPreviousBlockHash();
-        startingHashCorrect = lastBlockPreviousHash.equals(EXPECTED_STARTING_HASH);
+        startingHashCorrect = lastBlockPreviousHash.equals(initialHash);
     }
 
     private void updateSuccessiveBlockHashesAgree() {
@@ -56,5 +81,26 @@ public class Blockchain implements Iterable<Block> {
 
     public Iterator<Block> iterator() {
         return blocks.iterator();
+    }
+
+    /**
+     * Returns the number of blocks in this blockchain.
+     *
+     * @return  the number of blocks
+     */
+    public int getLength() {
+        return length;
+    }
+
+    /**
+     * Gets the hash of the last block in this blockchain.
+     *
+     * If this blockchain is empty, then the initial hash is returned.
+     *
+     * @return  the hash of the last block in the chain, or the initial hash if
+     * there are no blocks.
+     */
+    public String getLastBlockHash() {
+        return lastBlockHash;
     }
 }
