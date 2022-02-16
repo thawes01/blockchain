@@ -4,18 +4,18 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-class AppConfigurationTest {
+class ConfigurationTest {
 
     @Test
     void getNumberOfBlocksReturns() {
-        AppConfiguration appConfiguration = new AppConfiguration();
-        int numBlocks = appConfiguration.getNumberOfBlocks();
+        Configuration configuration = new Configuration();
+        int numBlocks = configuration.getNumberOfBlocks();
     }
 
     @Test
     void getSetPrintStream() {
-        AppConfiguration appConfiguration = new AppConfiguration();
+        Configuration configuration = new Configuration();
         PrintStream printStream = new PrintStream(new ByteArrayOutputStream());
-        appConfiguration.setPrintStream(printStream);
+        configuration.setPrintStream(printStream);
     }
 }

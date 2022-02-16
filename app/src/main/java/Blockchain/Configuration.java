@@ -2,7 +2,7 @@ package Blockchain;
 
 import java.io.PrintStream;
 
-public class AppConfiguration {
+public class Configuration {
     private final int numberOfBlocks = 5;
     private PrintStream printStream = System.out;
 
