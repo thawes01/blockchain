@@ -42,7 +42,7 @@ public class BlockchainGenerator {
     }
 
     private BasicBlockData basicBlockDataGivenNonemptyBlockchain(Blockchain blockchain) {
-        int nextId = 0;
+        int nextId = blockchain.getLastBlockId() + 1;
         String previousBlockHash = blockchain.getLastBlockHash();
         return new BasicBlockData(nextId, previousBlockHash);
     }

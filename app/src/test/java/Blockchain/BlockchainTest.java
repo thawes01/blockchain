@@ -135,4 +135,21 @@ public class BlockchainTest {
 
         assertEquals(block2.computeHash(), blockchain.getLastBlockHash());
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2})
+    void getLastBlockIdReturnsLastBlockIdOfNonemptyBlockchain(int id) {
+        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
+        BasicBlockData basicBlockData2 = new BasicBlockData(id, "999");
+        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
+        blockchain.push(block1);
+        blockchain.push(block2);
+
+        assertEquals(block2.getId(), blockchain.getLastBlockId());
+    }
+
+    @Test
+    void getLastBlockIdThrowsRuntimeExceptionForEmptyBlockchain() {
+        assertThrows(EmptyBlockchainException.class, () -> blockchain.getLastBlockId());
+    }
 }
