@@ -103,4 +103,20 @@ public class Blockchain implements Iterable<Block> {
     public String getLastBlockHash() {
         return lastBlockHash;
     }
+
+    /**
+     * Gets the ID of the last block in this blockchain.
+     *
+     * If the blockchain is empty, then an {@link EmptyBlockchainException} is
+     * thrown.
+     *
+     * @return  the ID of the last block in this blockchain
+     */
+    public int getLastBlockId() {
+        if (length == 0) {
+            throw new EmptyBlockchainException(
+                    "Tried accessing ID of last block in blockchain, but blockchain is empty");
+        }
+        return lastBlock.getId();
+    }
 }
