@@ -25,7 +25,7 @@ public class BlockchainGeneratorTest {
     @ValueSource(ints = {0, 1, 2, 3})
     void generateReturnsValidBlockchain(int numBlocks) {
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
-        assertTrue(blockchain.verify());
+        assertTrue(blockchain.validate());
     }
 
     @Test

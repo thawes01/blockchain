@@ -75,7 +75,22 @@ public class Blockchain implements Iterable<Block> {
         return this.lastBlock;
     }
 
-    public boolean verify() {
+    /**
+     * Check that this blockchain is valid.
+     *
+     * A blockchain is valid if:
+     * <ul>
+     *     <li>the first block has the correct entry in its 'previous block
+     *     hash' field; and</li>
+     *     <li>each block correctly records the hash of the previous block in
+     *     the chain.</li>
+     * </ul>
+     * In the case where this blockchain is empty, the return value is
+     * {@code true}.
+     *
+     * @return  whether this blockchain is valid
+     */
+    public boolean validate() {
         return startingHashCorrect && successiveBlockHashesAgree;
     }
 

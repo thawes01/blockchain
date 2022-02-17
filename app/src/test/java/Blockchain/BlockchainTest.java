@@ -47,7 +47,7 @@ public class BlockchainTest {
         blockchain.push(block1);
         blockchain.push(block2);
 
-        assertTrue(blockchain.verify());
+        assertTrue(blockchain.validate());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BlockchainTest {
         blockchain.push(block2);
         blockchain.push(block3);
 
-        assertFalse(blockchain.verify());
+        assertFalse(blockchain.validate());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class BlockchainTest {
         blockchain.push(block1);
         blockchain.push(block2);
 
-        assertFalse(blockchain.verify());
+        assertFalse(blockchain.validate());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class BlockchainTest {
         blockchain.push(block2);
         blockchain.push(block3);
 
-        assertFalse(blockchain.verify());
+        assertFalse(blockchain.validate());
     }
 
     @Test
