@@ -11,6 +11,7 @@ class AppTest {
     private Configuration configuration;
     private BlockchainGenerator blockchainGenerator;
     private ByteArrayOutputStream outputStreamCaptor;
+    private Printer printer;
 
     private static int countSubstringInstances(String string, String substring) {
         String[] stringSplits = string.split(substring);
@@ -22,15 +23,13 @@ class AppTest {
         outputStreamCaptor = new ByteArrayOutputStream();
         configuration = new Configuration();
         configuration.setPrintStream(new PrintStream(outputStreamCaptor));
+        printer = new Printer(new PrintStream(outputStreamCaptor));
         blockchainGenerator = new BlockchainGenerator();
     }
 
     @Test
     void runPrintsBlockchainInformation() {
-        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-        configuration.setPrintStream(new PrintStream(outputStreamCaptor));
-
-        App.run(configuration, blockchainGenerator);
+        App.run(configuration, blockchainGenerator, printer);
 
         String systemOutContents = outputStreamCaptor.toString();
         int numberOfBlocks = countSubstringInstances(systemOutContents, "Block:");
@@ -48,6 +47,6 @@ class AppTest {
         when(mockedBlockchainGenerator.generate(1)).thenReturn(invalidBlockchain);
 
         assertThrows(RuntimeException.class,
-                () -> App.run(configuration, mockedBlockchainGenerator));
+                () -> App.run(configuration, mockedBlockchainGenerator, printer));
     }
 }
