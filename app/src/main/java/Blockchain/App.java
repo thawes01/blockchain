@@ -29,7 +29,7 @@ public class App {
     }
 
     private static void validateBlockchain(Blockchain blockchain) {
-        if (!blockchain.verify()) {
+        if (!blockchain.validate()) {
             throw new RuntimeException();
         }
     }
