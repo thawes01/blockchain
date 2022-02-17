@@ -6,6 +6,11 @@ public class App {
     private static Configuration configuration;
     private static BlockchainGenerator blockchainGenerator;
 
+    /**
+     * Generates a blockchain, validates it and prints the contents of it.
+     *
+     * @param args  command line arguments (not used)
+     */
     public static void main(String[] args) {
         configureApp();
         run(configuration, blockchainGenerator);
