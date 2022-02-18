@@ -3,13 +3,12 @@ package Blockchain;
 import java.io.PrintStream;
 
 public class Application {
-    private PrintStream printStream;
-    private BlockchainGenerator blockchainGenerator;
+    private final PrintStream printStream;
+    private final BlockchainGenerator blockchainGenerator;
 
-    public Application(PrintStream printStream,
-                       BlockchainGenerator blockchainGenerator) {
-        this.printStream = printStream;
-        this.blockchainGenerator = blockchainGenerator;
+    public Application(Configuration configuration) {
+        this.printStream = configuration.getPrintStream();
+        this.blockchainGenerator = configuration.getBlockchainGenerator();
     }
 
     public void start() {

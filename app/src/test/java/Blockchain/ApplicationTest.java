@@ -15,16 +15,21 @@ public class ApplicationTest {
     private static BlockchainGenerator blockchainGenerator;
 
     @BeforeEach
-    void setUpApplication() {
+    void setUpApplicationElements() {
         outputStreamCaptor = new ByteArrayOutputStream();
         printStream = new PrintStream(outputStreamCaptor);
         blockchainGenerator = new BlockchainGenerator();
     }
 
     @Test
-    void startPrintsOutputToSpecifiedPrintStream() {
-        application = new Application(printStream, blockchainGenerator);
+    void startPrintsOutputToPrintStreamInConfiguration() {
+        Configuration configuration = new Configuration();
+        configuration.setPrintStream(printStream);
+        configuration.setBlockchainGenerator(blockchainGenerator);
+        application = new Application(configuration);
+
         application.start();
+
         String outputContent = outputStreamCaptor.toString();
         assertNotEquals("", outputContent);
     }
@@ -32,9 +37,14 @@ public class ApplicationTest {
     @Test
     void startGeneratesBlockchain() {
         int blockchainLength = 1;
+        Configuration configuration = new Configuration();
         BlockchainGenerator mockedBlockchainGenerator = Mockito.mock(BlockchainGenerator.class);
-        application = new Application(printStream, mockedBlockchainGenerator);
+        configuration.setPrintStream(printStream);
+        configuration.setBlockchainGenerator(mockedBlockchainGenerator);
+        application = new Application(configuration);
+
         application.start();
+
         Mockito.verify(mockedBlockchainGenerator).generate(blockchainLength);
     }
 }
