@@ -1,20 +1,18 @@
 package Blockchain;
 
-import java.io.PrintStream;
-
 public class Application {
-    private final PrintStream printStream;
-    private final BlockchainGenerator blockchainGenerator;
     private final int lengthOfBlockchain;
+    private final BlockchainGenerator blockchainGenerator;
+    private final Printer printer;
 
     public Application(Configuration configuration) {
-        this.printStream = configuration.printStream;
-        this.blockchainGenerator = configuration.blockchainGenerator;
         this.lengthOfBlockchain = configuration.lengthOfBlockchain;
+        this.blockchainGenerator = configuration.blockchainGenerator;
+        this.printer = configuration.printer;
     }
 
     public void start() {
-        blockchainGenerator.generate(lengthOfBlockchain);
-        printStream.print("output");
+        Blockchain blockchain = blockchainGenerator.generate(lengthOfBlockchain);
+        printer.print(blockchain);
     }
 }
