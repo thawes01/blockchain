@@ -5,6 +5,12 @@ public class Application {
     private final BlockchainGenerator blockchainGenerator;
     private final Printer printer;
 
+    private static void throwExceptionIfNotValid(Blockchain blockchain) {
+        if (!blockchain.validate()) {
+            throw new RuntimeException("Blockchain generated not valid, there is a problem with blockchain generation");
+        }
+    }
+
     public Application(Configuration configuration) {
         this.lengthOfBlockchain = configuration.lengthOfBlockchain;
         this.blockchainGenerator = configuration.blockchainGenerator;
@@ -13,6 +19,7 @@ public class Application {
 
     public void start() {
         Blockchain blockchain = blockchainGenerator.generate(lengthOfBlockchain);
+        throwExceptionIfNotValid(blockchain);
         printer.print(blockchain);
     }
 }
