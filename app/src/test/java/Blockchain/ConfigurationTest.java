@@ -1,21 +1,26 @@
 package Blockchain;
 
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigurationTest {
 
     @Test
-    void getNumberOfBlocksReturns() {
-        Configuration configuration = new Configuration();
-        int numBlocks = configuration.getNumberOfBlocks();
+    void fromDefaultSettingsInitialisesBlockchainGenerator() {
+        Configuration configuration = Configuration.fromDefaultSettings();
+        assertNotNull(configuration.blockchainGenerator);
     }
 
     @Test
-    void getSetPrintStream() {
-        Configuration configuration = new Configuration();
-        PrintStream printStream = new PrintStream(new ByteArrayOutputStream());
-        configuration.setPrintStream(printStream);
+    void fromDefaultSettingsInitialisesPrinter() {
+        Configuration configuration = Configuration.fromDefaultSettings();
+        assertEquals(Settings.PRINT_STREAM, configuration.printer.getPrintStream());
+    }
+
+    @Test
+    void fromDefaultSettingsInitialisesLengthOfBlockchain() {
+        Configuration configuration = Configuration.fromDefaultSettings();
+        assertEquals(Settings.LENGTH_OF_BLOCKCHAIN, configuration.lengthOfBlockchain);
     }
 }

@@ -1,31 +1,21 @@
 package Blockchain;
 
-import java.io.PrintStream;
-
 public class Configuration {
-    private final int numberOfBlocks = 5;
-    private PrintStream printStream = System.out;
+    public int lengthOfBlockchain;
+    public BlockchainGenerator blockchainGenerator;
+    public Printer printer;
 
     /**
-     * Gets the number of blocks to generate in this application's blockchain.
+     * Allocates an application {@code Configuration} from default parameters
+     * set in {@link Settings}.
      *
-     * @return  the number of blocks in this application's blockchain.
+     * @return  the configuration created from default settings
      */
-    public int getNumberOfBlocks() {
-        return numberOfBlocks;
-    }
-
-    /**
-     * Gets the print stream to capture this application's output.
-     *
-     * @return  the print stream capturing application output
-     */
-    public PrintStream getPrintStream() {
-        return printStream;
-    }
-
-    /** Sets the print stream for capturing this application's output. */
-    void setPrintStream(PrintStream printStream) {
-        this.printStream = printStream;
+    public static Configuration fromDefaultSettings() {
+        Configuration configuration = new Configuration();
+        configuration.lengthOfBlockchain = Settings.LENGTH_OF_BLOCKCHAIN;
+        configuration.blockchainGenerator = new BlockchainGenerator();
+        configuration.printer = new Printer(Settings.PRINT_STREAM);
+        return configuration;
     }
 }

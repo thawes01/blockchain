@@ -16,6 +16,15 @@ public class Printer {
     }
 
     /**
+     * Returns the print stream associated with this printer.
+     *
+     * @return  the print stream of this printer.
+     */
+    public PrintStream getPrintStream() {
+        return printStream;
+    }
+
+    /**
      * Print information about a block to this {@code Printer}'s stream.
      *
      * Note: the string printed ends with a newline character.

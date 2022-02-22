@@ -2,7 +2,6 @@ package Blockchain;
 
 import static Blockchain.testUtils.Time.defaultFixedClock;
 import static org.junit.jupiter.api.Assertions.*;
-
 import Blockchain.testUtils.BlockCreator;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,6 +20,12 @@ public class PrinterTest {
     void setUpOutputStreams() {
         outputStream = new ByteArrayOutputStream();
         printStream = new PrintStream(outputStream);
+    }
+
+    @Test
+    void getPrintStreamReturnsExpectedPrintStream() {
+        Printer printer = new Printer(printStream);
+        assertEquals(printStream, printer.getPrintStream());
     }
 
     @AfterEach
