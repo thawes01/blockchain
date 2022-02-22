@@ -29,41 +29,60 @@ public class ApplicationTest {
     }
 
     @ParameterizedTest
+    @ValueSource(ints = {-1, -2})
+    void applicationThrowsRuntimeExceptionIfLengthOfBlockchainNegative(int lengthOfBlockchain) {
+        configuration.lengthOfBlockchain = lengthOfBlockchain;
+        assertThrows(RuntimeException.class, () -> new Application(configuration));
+    }
+
+    @Test
+    void applicationThrowsRuntimeExceptionIfBlockchainGeneratorNull() {
+        configuration.blockchainGenerator = null;
+        assertThrows(RuntimeException.class, () -> new Application(configuration));
+    }
+
+    @Test
+    void applicationThrowsRuntimeExceptionIfPrinterNull() {
+        configuration.printer = null;
+        assertThrows(RuntimeException.class, () -> new Application(configuration));
+    }
+
+    @ParameterizedTest
     @ValueSource(ints = {0, 1, 2})
-    void startGeneratesBlockchainOfCorrectLength(int lengthOfBlockchain) {
+    void runGeneratesBlockchainOfCorrectLength(int lengthOfBlockchain) {
         configuration.lengthOfBlockchain = lengthOfBlockchain;
         Mockito.when(blockchainGenerator.generate(lengthOfBlockchain)).thenReturn(blockchain);
         application = new Application(configuration);
 
-        application.start();
+        application.run();
 
         Mockito.verify(blockchainGenerator).generate(lengthOfBlockchain);
     }
 
     @Test
-    void startValidatesBlockchainPassesValidation() {
+    void runValidatesBlockchainPassesValidation() {
         application = new Application(configuration);
 
-        application.start();
+        application.run();
 
         Mockito.verify(blockchain).validate();
     }
 
     @Test
-    void startThrowsRuntimeExceptionIfBlockchainIsInvalid() {
+    void runThrowsRuntimeExceptionIfBlockchainIsInvalid() {
         Mockito.when(blockchain.validate()).thenReturn(false);
         Mockito.when(blockchainGenerator.generate(lengthOfBlockchain)).thenReturn(blockchain);
         application = new Application(configuration);
 
-        assertThrows(RuntimeException.class, application::start);
+        assertThrows(RuntimeException.class, application::run);
     }
 
     @Test
-    void startPrintsWithPrinterFromConfiguration() {
+    void runPrintsWithPrinterFromConfiguration() {
         Mockito.when(blockchainGenerator.generate(lengthOfBlockchain)).thenReturn(blockchain);
         application = new Application(configuration);
 
-        application.start();
+        application.run();
 
         Mockito.verify(printer).print(blockchain);
     }
