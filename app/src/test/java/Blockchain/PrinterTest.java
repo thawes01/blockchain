@@ -22,6 +22,12 @@ public class PrinterTest {
         printStream = new PrintStream(outputStream);
     }
 
+    @Test
+    void getPrintStreamReturnsExpectedPrintStream() {
+        Printer printer = new Printer(printStream);
+        assertEquals(printStream, printer.getPrintStream());
+    }
+
     @AfterEach
     void tearDownPrintStream() {
         printStream.close();
