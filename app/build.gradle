@@ -1,0 +1,48 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit Jupiter for testing and Mockito for mocking.
+    testImplementation 'org.junit.jupiter:junit-jupiter:+'
+    testImplementation 'org.mockito:mockito-inline:+'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:31.0.1-jre'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': 'Blockchain.App')
+    }
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'Blockchain.Main'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
+test {
+    testLogging {
+        events "failed", "skipped"
+    }
+}
+
+version = '0.1.0'
