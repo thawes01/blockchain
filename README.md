@@ -45,33 +45,43 @@ is as follows:
 ```text
 Block:
 Id: 0
-Timestamp: 1645648760667
-Hash of the previous block: 0
-Hash of the block: 575ac22db09b5652701dc67de8d2f3c2995e54e12bbff647ff4caebb00fad067
+Timestamp: 1645649962310
+Hash of the previous block:
+0
+Hash of the block:
+4c23fd2ca2878297a485de75aff812261678be3696d9a1c7b01482b434e7944f
 
 Block:
 Id: 1
-Timestamp: 1645648760689
-Hash of the previous block: 575ac22db09b5652701dc67de8d2f3c2995e54e12bbff647ff4caebb00fad067
-Hash of the block: 5d55369fca4a25900efb0f9fe95150cce1bedd84f1c671a63efbbf8e30b3c189
+Timestamp: 1645649962331
+Hash of the previous block:
+4c23fd2ca2878297a485de75aff812261678be3696d9a1c7b01482b434e7944f
+Hash of the block:
+7db091e487c1b68b46c2c5e29a52087859ff146075ad8f47927a3d25736def17
 
 Block:
 Id: 2
-Timestamp: 1645648760689
-Hash of the previous block: 5d55369fca4a25900efb0f9fe95150cce1bedd84f1c671a63efbbf8e30b3c189
-Hash of the block: 5900454229edb578b2e77d9cc526446696d26b80f76eaf6a4fd705c7a2ba1df8
+Timestamp: 1645649962332
+Hash of the previous block:
+7db091e487c1b68b46c2c5e29a52087859ff146075ad8f47927a3d25736def17
+Hash of the block:
+0139dc5e1bca0a56e7c00019e426e09d9f6b9828c0bb3630108f586286975104
 
 Block:
 Id: 3
-Timestamp: 1645648760689
-Hash of the previous block: 5900454229edb578b2e77d9cc526446696d26b80f76eaf6a4fd705c7a2ba1df8
-Hash of the block: f4d509f460c6397df3f38935a530a168bf70b5468e4b899051f16e8f09b7addd
+Timestamp: 1645649962332
+Hash of the previous block:
+0139dc5e1bca0a56e7c00019e426e09d9f6b9828c0bb3630108f586286975104
+Hash of the block:
+0922bfc06b59ca5822070a807195ed784a7919a0aa9d51434bce56f7907e29a6
 
 Block:
 Id: 4
-Timestamp: 1645648760689
-Hash of the previous block: f4d509f460c6397df3f38935a530a168bf70b5468e4b899051f16e8f09b7addd
-Hash of the block: e8956b620489214127526060a7d30cb7ec9209f88f264820c0afb228c22054cd
+Timestamp: 1645649962332
+Hash of the previous block:
+0922bfc06b59ca5822070a807195ed784a7919a0aa9d51434bce56f7907e29a6
+Hash of the block:
+3ee148b0b67ca5c1856dc95307faea0fa110d7ea6561b3db155357176921abab
 
 ```
 
