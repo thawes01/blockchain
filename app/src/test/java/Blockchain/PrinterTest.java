@@ -58,8 +58,8 @@ public class PrinterTest {
                                     String previousBlockHash, String blockHash) {
         return String.format("Id: %d\n", id) +
                 String.format("Timestamp: %s\n", creationTimestamp) +
-                String.format("Hash of the previous block: %s\n", previousBlockHash) +
-                String.format("Hash of the block: %s\n", blockHash);
+                String.format("Hash of the previous block:\n%s\n", previousBlockHash) +
+                String.format("Hash of the block:\n%s\n", blockHash);
     }
 
     @Test
