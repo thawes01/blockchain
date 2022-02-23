@@ -38,8 +38,8 @@ public class Printer {
     private String blockInformation(Block block) {
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
-                String.format("Hash of the previous block: %s\n", block.getPreviousBlockHash()) +
-                String.format("Hash of the block: %s\n", block.computeHash());
+                String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
+                String.format("Hash of the block:\n%s\n", block.computeHash());
     }
 
     /**
