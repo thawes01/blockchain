@@ -2,6 +2,7 @@ package Blockchain;
 
 import static Blockchain.testUtils.Time.defaultFixedClock;
 import Blockchain.testUtils.BasicBlockDataCreator;
+import Blockchain.testUtils.Time;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -9,7 +10,7 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlockTest {
-    private static final StopClock DUMMY_STOPCLOCK = StopClock.systemUTC();
+    private static final StopClock DUMMY_STOPCLOCK = new StopClock(defaultFixedClock(999));
     private static final int HASH_LENGTH = 64;
 
     @Test
@@ -18,6 +19,21 @@ public class BlockTest {
         String blockHash = block.computeHash();
 
         assertEquals(HASH_LENGTH, blockHash.length());
+    }
+
+    @Test
+    void getHashReturnsHashRepresentationOfBlock() {
+        Block block = new Block(BasicBlockDataCreator.withDefaultArgs(), DUMMY_STOPCLOCK);
+        String expectedHash = StringUtil.applySha256(stringRepresentation(block));
+        String blockHash = block.computeHash();
+
+        assertEquals(expectedHash, blockHash);
+    }
+
+    private String stringRepresentation(Block block) {
+        return String.format("%s%s%s%s", block.getId(),
+                block.getCreationTimestamp(), block.getMagicNumber(),
+                block.getPreviousBlockHash());
     }
 
     private void assertBlockHashesNotEqual(Block block1, Block block2) {
@@ -103,5 +119,27 @@ public class BlockTest {
         Block block = new Block(BasicBlockDataCreator.withPreviousBlockHash(previousBlockHash), DUMMY_STOPCLOCK);
 
         assertEquals(previousBlockHash, block.getPreviousBlockHash());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void getHashStartsWithGivenNumberOfZerosWhenMagicNumberFound(int numberOfZeros) {
+        Block block = new Block(BasicBlockDataCreator.withId(0), DUMMY_STOPCLOCK);
+
+        block.findMagicNumber(numberOfZeros);
+
+        assertStartsWithZeros(block.computeHash(), numberOfZeros);
+    }
+
+    private void assertStartsWithZeros(String hash, int numberOfZeros) {
+        String startString = "0".repeat(numberOfZeros);
+        assertTrue(hash.startsWith(startString));
+    }
+
+    @Test
+    void getMagicNumberReturnsNegativeOneIfMagicNumberNotFound() {
+        Block block = new Block(BasicBlockDataCreator.withId(0), DUMMY_STOPCLOCK);
+
+        assertEquals(-1, block.getMagicNumber());
     }
 }
