@@ -47,17 +47,19 @@ public class PrinterTest {
         Printer printer = new Printer(printStream);
 
         String expectedContents = blockInformation(block.getId(),
-                block.getCreationTimestamp(), block.getPreviousBlockHash(),
-                block.computeHash());
+                block.getCreationTimestamp(), block.getMagicNumber(),
+                block.getPreviousBlockHash(), block.computeHash());
         printer.print(block);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
     }
 
     private String blockInformation(int id, long creationTimestamp,
+                                    long magicNumber,
                                     String previousBlockHash, String blockHash) {
         return String.format("Id: %d\n", id) +
                 String.format("Timestamp: %s\n", creationTimestamp) +
+                String.format("Magic number: %s\n", magicNumber) +
                 String.format("Hash of the previous block:\n%s\n", previousBlockHash) +
                 String.format("Hash of the block:\n%s\n", blockHash);
     }
@@ -70,8 +72,8 @@ public class PrinterTest {
         Printer printer = new Printer(printStream);
 
         String expectedContents = "Block:\n" + blockInformation(block.getId(),
-                block.getCreationTimestamp(), block.getPreviousBlockHash(),
-                block.computeHash());
+                block.getCreationTimestamp(), block.getMagicNumber(),
+                block.getPreviousBlockHash(), block.computeHash());
         printer.print(blockchain);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
@@ -100,7 +102,8 @@ public class PrinterTest {
             Block block = blocks[i];
             blockInformationStrings[i] = "Block:\n" +
                     blockInformation(block.getId(), block.getCreationTimestamp(),
-                            block.getPreviousBlockHash(), block.computeHash());
+                            block.getMagicNumber(), block.getPreviousBlockHash(),
+                            block.computeHash());
         }
         return String.join("\n", blockInformationStrings);
     }

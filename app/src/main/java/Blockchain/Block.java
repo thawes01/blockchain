@@ -60,4 +60,9 @@ public class Block {
     public long getCreationTimestamp() {
         return this.creationTimestamp;
     }
+
+    // TODO: implement real version
+    public long getMagicNumber() {
+        return 1L;
+    }
 }
