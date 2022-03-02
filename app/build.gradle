@@ -25,7 +25,7 @@ java {
 
 jar {
     manifest {
-        attributes('Main-Class': 'Blockchain.App')
+        attributes('Main-Class': 'Blockchain.Main')
     }
 }
 
@@ -45,4 +45,4 @@ test {
     }
 }
 
-version = '0.1.0'
+version = '0.1.1'
