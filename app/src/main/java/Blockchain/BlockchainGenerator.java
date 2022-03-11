@@ -30,6 +30,10 @@ public class BlockchainGenerator {
         this.proofOfWorkZeros = proofOfWorkZeros;
     }
 
+    int getProofOfWorkZeros() {
+        return proofOfWorkZeros;
+    }
+
     /**
      * Generates a blockchain with a specified number of blocks.
      *
