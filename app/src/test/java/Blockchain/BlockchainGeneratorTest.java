@@ -39,4 +39,16 @@ public class BlockchainGeneratorTest {
             id++;
         }
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3, 4})
+    void generateProducesBlocksWithProvenHashes(int proofOfWorkZeros) {
+        int numBlocks = 1;
+        String zeros = "0".repeat(proofOfWorkZeros);
+        BlockchainGenerator blockchainGenerator = new BlockchainGenerator(proofOfWorkZeros);
+
+        Blockchain blockchain = blockchainGenerator.generate(numBlocks);
+
+        assertTrue(blockchain.getLastBlockHash().startsWith(zeros));
+    }
 }
