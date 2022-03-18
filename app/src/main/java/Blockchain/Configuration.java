@@ -11,26 +11,26 @@ public class Configuration {
      *
      * @return  the configuration created from default settings
      */
-    public static Configuration fromDefaultSettings() {
+    public static Configuration from(Settings settings) {
         return new Configuration()
-                .addLengthOfBlockchainFromDefaultSettings()
-                .addBlockchainGeneratorFromDefaultSettings()
-                .addPrinterFromDefaultSettings();
+                .addLengthOfBlockchainFrom(settings)
+                .addBlockchainGeneratorFrom(settings)
+                .addPrinterFrom(settings);
     }
 
-    private Configuration addLengthOfBlockchainFromDefaultSettings() {
-        lengthOfBlockchain = Settings.LENGTH_OF_BLOCKCHAIN;
+    private Configuration addLengthOfBlockchainFrom(Settings settings) {
+        lengthOfBlockchain = settings.lengthOfBlockchain;
         return this;
     }
 
-    private Configuration addBlockchainGeneratorFromDefaultSettings() {
-        int proofOfWorkZeros = ProofOfWorkMarshaller.fromProofOfWorkNumber(Settings.PROOF_OF_WORK_NUMBER);
+    private Configuration addBlockchainGeneratorFrom(Settings settings) {
+        int proofOfWorkZeros = ProofOfWorkMarshaller.fromProofOfWorkNumber(settings.proofOfWorkNumber);
         blockchainGenerator = new BlockchainGenerator(proofOfWorkZeros);
         return this;
     }
 
-    private Configuration addPrinterFromDefaultSettings() {
-        printer = new Printer(Settings.PRINT_STREAM);
+    private Configuration addPrinterFrom(Settings settings) {
+        printer = new Printer(settings.printStream);
         return this;
     }
 }
