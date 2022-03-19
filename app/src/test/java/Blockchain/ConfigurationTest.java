@@ -1,17 +1,24 @@
 package Blockchain;
 
 import org.junit.jupiter.api.*;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.*;
 
 class ConfigurationTest {
     private static final InputStream systemIn = System.in;
     private static final PrintStream systemOut = System.out;
+    private Settings settings;
+
+    @BeforeEach
+    void setUpSettings() {
+        settings = new Settings();
+    }
 
     /** Replaces {@code System.in} calls so that tests run with different values
-     * of {@link Settings#PROOF_OF_WORK_NUMBER}.
+     * of {@link Settings#proofOfWorkNumber}.
      *
      * Adapted from approach outlined in
      *
@@ -50,21 +57,23 @@ class ConfigurationTest {
     }
 
     @Test
-    void fromDefaultSettingsInitialisesBlockchainGenerator() {
-        Configuration configuration = Configuration.fromDefaultSettings();
+    void fromInitialisesBlockchainGenerator() {
+        Configuration configuration = Configuration.from(settings);
         assertNotNull(configuration.blockchainGenerator);
     }
 
     @Test
-    void fromDefaultSettingsInitialisesPrinter() {
-        Configuration configuration = Configuration.fromDefaultSettings();
-        assertEquals(Settings.PRINT_STREAM, configuration.printer.getPrintStream());
+    void fromInitialisesPrinter() {
+        Configuration configuration = Configuration.from(settings);
+        assertEquals(settings.printStream, configuration.printer.getPrintStream());
     }
 
-    @Test
-    void fromDefaultSettingsInitialisesLengthOfBlockchain() {
-        Configuration configuration = Configuration.fromDefaultSettings();
-        assertEquals(Settings.LENGTH_OF_BLOCKCHAIN, configuration.lengthOfBlockchain);
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void fromInitialisesLengthOfBlockchain(int lengthOfBlockchain) {
+        settings.lengthOfBlockchain = lengthOfBlockchain;
+        Configuration configuration = Configuration.from(settings);
+        assertEquals(lengthOfBlockchain, configuration.lengthOfBlockchain);
     }
 
     // Mocking adapted from
@@ -73,18 +82,27 @@ class ConfigurationTest {
     //
     // as accessed on 2022-03-08.
     @Test
-    void fromDefaultSettingsInitialisesBlockchainGeneratorWithCorrectProofOfWorkZeros() {
-        int proofOfWorkZeros = 2;
-        try (MockedStatic<ProofOfWorkMarshaller> proofOfWorkMarshaller = Mockito.mockStatic(ProofOfWorkMarshaller.class)) {
-            proofOfWorkMarshaller.when(
-                    () -> ProofOfWorkMarshaller.fromProofOfWorkNumber(Settings.PROOF_OF_WORK_NUMBER))
-                    .thenReturn(proofOfWorkZeros);
+    void fromInitialisesBlockchainGeneratorWithCorrectProofOfWorkZerosWhenNegative() {
+        settings.proofOfWorkNumber = -1;
+        int userSubmittedProofOfWork = 2;
+        try (MockedStatic<UserInputs> proofOfWorkPrompter = Mockito.mockStatic(UserInputs.class)) {
+            proofOfWorkPrompter.when(UserInputs::getProofOfWorkNumber)
+                    .thenReturn(userSubmittedProofOfWork);
 
-            Configuration configuration = Configuration.fromDefaultSettings();
+            Configuration configuration = Configuration.from(settings);
 
-            proofOfWorkMarshaller.verify(
-                    () -> ProofOfWorkMarshaller.fromProofOfWorkNumber(Settings.PROOF_OF_WORK_NUMBER));
-            assertEquals(proofOfWorkZeros, configuration.blockchainGenerator.getProofOfWorkZeros());
+            proofOfWorkPrompter.verify(UserInputs::getProofOfWorkNumber);
+            assertEquals(userSubmittedProofOfWork, configuration.blockchainGenerator.getProofOfWorkNumber());
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void fromInitialisesBlockchainGeneratorWithCorrectProofOfWorkZerosWhenNonNegative(int proofOfWorkNumber) {
+        settings.proofOfWorkNumber = proofOfWorkNumber;
+
+        Configuration configuration = Configuration.from(settings);
+
+        assertEquals(proofOfWorkNumber, configuration.blockchainGenerator.getProofOfWorkNumber());
     }
 }
