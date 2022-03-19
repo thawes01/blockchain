@@ -24,9 +24,16 @@ public class Configuration {
     }
 
     private Configuration addBlockchainGeneratorFrom(Settings settings) {
-        int proofOfWorkZeros = ProofOfWorkMarshaller.fromProofOfWorkNumber(settings.proofOfWorkNumber);
+        int proofOfWorkZeros = getProofOfWorkZerosFrom(settings);
         blockchainGenerator = new BlockchainGenerator(proofOfWorkZeros);
         return this;
+    }
+
+    private int getProofOfWorkZerosFrom(Settings settings) {
+        if (settings.proofOfWorkNumber < 0) {
+            return UserInputs.getProofOfWorkNumber();
+        }
+        return settings.proofOfWorkNumber;
     }
 
     private Configuration addPrinterFrom(Settings settings) {

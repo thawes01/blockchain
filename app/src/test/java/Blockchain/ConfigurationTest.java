@@ -82,18 +82,27 @@ class ConfigurationTest {
     //
     // as accessed on 2022-03-08.
     @Test
-    void fromInitialisesBlockchainGeneratorWithCorrectProofOfWorkZeros() {
-        int proofOfWorkZeros = 2;
-        try (MockedStatic<ProofOfWorkMarshaller> proofOfWorkMarshaller = Mockito.mockStatic(ProofOfWorkMarshaller.class)) {
-            proofOfWorkMarshaller.when(
-                    () -> ProofOfWorkMarshaller.fromProofOfWorkNumber(settings.proofOfWorkNumber))
-                    .thenReturn(proofOfWorkZeros);
+    void fromInitialisesBlockchainGeneratorWithCorrectProofOfWorkZerosWhenNegative() {
+        settings.proofOfWorkNumber = -1;
+        int userSubmittedProofOfWork = 2;
+        try (MockedStatic<UserInputs> proofOfWorkPrompter = Mockito.mockStatic(UserInputs.class)) {
+            proofOfWorkPrompter.when(UserInputs::getProofOfWorkNumber)
+                    .thenReturn(userSubmittedProofOfWork);
 
             Configuration configuration = Configuration.from(settings);
 
-            proofOfWorkMarshaller.verify(
-                    () -> ProofOfWorkMarshaller.fromProofOfWorkNumber(settings.proofOfWorkNumber));
-            assertEquals(proofOfWorkZeros, configuration.blockchainGenerator.getProofOfWorkZeros());
+            proofOfWorkPrompter.verify(UserInputs::getProofOfWorkNumber);
+            assertEquals(userSubmittedProofOfWork, configuration.blockchainGenerator.getProofOfWorkZeros());
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1})
+    void fromInitialisesBlockchainGeneratorWithCorrectProofOfWorkZerosWhenNonNegative(int proofOfWorkNumber) {
+        settings.proofOfWorkNumber = proofOfWorkNumber;
+
+        Configuration configuration = Configuration.from(settings);
+
+        assertEquals(proofOfWorkNumber, configuration.blockchainGenerator.getProofOfWorkZeros());
     }
 }
