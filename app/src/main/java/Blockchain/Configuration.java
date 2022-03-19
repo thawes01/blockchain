@@ -24,12 +24,12 @@ public class Configuration {
     }
 
     private Configuration addBlockchainGeneratorFrom(Settings settings) {
-        int proofOfWorkZeros = getProofOfWorkZerosFrom(settings);
-        blockchainGenerator = new BlockchainGenerator(proofOfWorkZeros);
+        int proofOfWorkNumber = getProofOfWorkNumberFrom(settings);
+        blockchainGenerator = new BlockchainGenerator(proofOfWorkNumber);
         return this;
     }
 
-    private int getProofOfWorkZerosFrom(Settings settings) {
+    private int getProofOfWorkNumberFrom(Settings settings) {
         if (settings.proofOfWorkNumber < 0) {
             return UserInputs.getProofOfWorkNumber();
         }

@@ -43,9 +43,9 @@ class UserInputsTest {
 
     @Test
     void getProofOfWorkNumberReturnsResultFromStandardInput() {
-        int proofOfWorkZeros = UserInputs.getProofOfWorkNumber();
+        int proofOfWorkNumber = UserInputs.getProofOfWorkNumber();
 
-        assertEquals(inputProofOfWorkNumber, proofOfWorkZeros);
+        assertEquals(inputProofOfWorkNumber, proofOfWorkNumber);
     }
 
     @Test

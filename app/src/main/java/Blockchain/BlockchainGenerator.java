@@ -4,7 +4,7 @@ public class BlockchainGenerator {
     private static final int FIRST_BLOCK_ID = 0;
     private static final String INITIAL_HASH = "0";
     private final StopClock stopClock = StopClock.systemUTC();
-    private final int proofOfWorkZeros;
+    private final int proofOfWorkNumber;
 
     /**
      * Allocates a {@code BlockchainGenerator} for generating blockchains.
@@ -23,15 +23,15 @@ public class BlockchainGenerator {
      * The blockchain is proven for the given number of zeros if the hash of
      * each block in the blockchain begins with the given number of zeros.
      *
-     * @param proofOfWorkZeros  the number of zeros for confirming proof of work
+     * @param proofOfWorkNumber  the number of zeros for confirming proof of work
      *                          for each block in the blockchain
      */
-    public BlockchainGenerator(int proofOfWorkZeros) {
-        this.proofOfWorkZeros = proofOfWorkZeros;
+    public BlockchainGenerator(int proofOfWorkNumber) {
+        this.proofOfWorkNumber = proofOfWorkNumber;
     }
 
-    int getProofOfWorkZeros() {
-        return proofOfWorkZeros;
+    int getProofOfWorkNumber() {
+        return proofOfWorkNumber;
     }
 
     /**
@@ -59,7 +59,7 @@ public class BlockchainGenerator {
     private Block generateNextBlock(Blockchain blockchain) {
         BasicBlockData basicBlockData = nextBasicBlockData(blockchain);
         Block block = new Block(basicBlockData, stopClock);
-        block.findMagicNumber(proofOfWorkZeros);
+        block.findMagicNumber(proofOfWorkNumber);
         return block;
     }
 

@@ -16,9 +16,9 @@ public class UserInputs {
     public static int getProofOfWorkNumber() {
         promptUser(initialPrompt);
         Scanner inputScanner = new Scanner(System.in);
-        int proofOfWorkZeros = queryForNonNegativeIntegerUntilSuccess(inputScanner);
+        int proofOfWorkNumber = queryForNonNegativeIntegerUntilSuccess(inputScanner);
         endUserPrompting();
-        return proofOfWorkZeros;
+        return proofOfWorkNumber;
     }
 
     private static void promptUser(String message) {

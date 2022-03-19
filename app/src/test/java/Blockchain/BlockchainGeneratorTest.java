@@ -42,10 +42,10 @@ public class BlockchainGeneratorTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4})
-    void generateProducesBlocksWithProvenHashes(int proofOfWorkZeros) {
+    void generateProducesBlocksWithProvenHashes(int proofOfWorkNumber) {
         int numBlocks = 1;
-        String zeros = "0".repeat(proofOfWorkZeros);
-        BlockchainGenerator blockchainGenerator = new BlockchainGenerator(proofOfWorkZeros);
+        String zeros = "0".repeat(proofOfWorkNumber);
+        BlockchainGenerator blockchainGenerator = new BlockchainGenerator(proofOfWorkNumber);
 
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
 

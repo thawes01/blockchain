@@ -92,7 +92,7 @@ class ConfigurationTest {
             Configuration configuration = Configuration.from(settings);
 
             proofOfWorkPrompter.verify(UserInputs::getProofOfWorkNumber);
-            assertEquals(userSubmittedProofOfWork, configuration.blockchainGenerator.getProofOfWorkZeros());
+            assertEquals(userSubmittedProofOfWork, configuration.blockchainGenerator.getProofOfWorkNumber());
         }
     }
 
@@ -103,6 +103,6 @@ class ConfigurationTest {
 
         Configuration configuration = Configuration.from(settings);
 
-        assertEquals(proofOfWorkNumber, configuration.blockchainGenerator.getProofOfWorkZeros());
+        assertEquals(proofOfWorkNumber, configuration.blockchainGenerator.getProofOfWorkNumber());
     }
 }
