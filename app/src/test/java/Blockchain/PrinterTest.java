@@ -48,24 +48,18 @@ public class PrinterTest {
         Block block = new Block(basicBlockData, stopClock);
         Printer printer = new Printer(printStream, generationTime);
 
-        String expectedContents = blockReport(block.getId(),
-                block.getCreationTimestamp(), block.getMagicNumber(),
-                block.getPreviousBlockHash(), block.computeHash(),
-                generationTime);
+        String expectedContents = blockReport(block, generationTime);
         printer.print(block);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
     }
 
-    private String blockReport(int id, long creationTimestamp,
-                               long magicNumber,
-                               String previousBlockHash, String blockHash,
-                               int generationDuration) {
-        return String.format("Id: %d\n", id) +
-                String.format("Timestamp: %s\n", creationTimestamp) +
-                String.format("Magic number: %s\n", magicNumber) +
-                String.format("Hash of the previous block:\n%s\n", previousBlockHash) +
-                String.format("Hash of the block:\n%s\n", blockHash) +
+    private String blockReport(Block block, int generationDuration) {
+        return String.format("Id: %d\n", block.getId()) +
+                String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
+                String.format("Magic number: %s\n", block.getMagicNumber()) +
+                String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
+                String.format("Hash of the block:\n%s\n", block.computeHash()) +
                 String.format("Block was generating for %d seconds\n", generationDuration);
     }
 
@@ -76,10 +70,7 @@ public class PrinterTest {
         blockchain.push(block);
         Printer printer = new Printer(printStream, generationTime);
 
-        String expectedContents = "Block:\n" + blockReport(block.getId(),
-                block.getCreationTimestamp(), block.getMagicNumber(),
-                block.getPreviousBlockHash(), block.computeHash(),
-                generationTime);
+        String expectedContents = "Block:\n" + blockReport(block, generationTime);
         printer.print(blockchain);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
@@ -107,10 +98,7 @@ public class PrinterTest {
         for (int i = 0; i < blocks.length; i++) {
             Block block = blocks[i];
             blockInformationStrings[i] = "Block:\n" +
-                    blockReport(block.getId(), block.getCreationTimestamp(),
-                            block.getMagicNumber(), block.getPreviousBlockHash(),
-                            block.computeHash(),
-                            generationTime);
+                    blockReport(block, generationTime);
         }
         return String.join("\n", blockInformationStrings);
     }
@@ -149,10 +137,7 @@ public class PrinterTest {
             Block block = records[i].block;
             int generationTime = records[i].generationTime;
             blockInformationStrings[i] = "Block:\n" +
-                    blockReport(block.getId(), block.getCreationTimestamp(),
-                            block.getMagicNumber(), block.getPreviousBlockHash(),
-                            block.computeHash(),
-                            generationTime);
+                    blockReport(block, generationTime);
         }
         return String.join("\n", blockInformationStrings);
     }
