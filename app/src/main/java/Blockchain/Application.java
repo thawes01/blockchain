@@ -1,9 +1,7 @@
 package Blockchain;
 
 public class Application {
-    private final int lengthOfBlockchain;
-    private final BlockchainGenerator blockchainGenerator;
-    private final Printer printer;
+    private final Configuration configuration;
 
     private static void validateConfiguration(Configuration configuration) {
         validateLengthOfBlockchain(configuration);
@@ -42,17 +40,26 @@ public class Application {
      */
     public Application(Configuration configuration) {
         validateConfiguration(configuration);
-        this.lengthOfBlockchain = configuration.lengthOfBlockchain;
-        this.blockchainGenerator = configuration.blockchainGenerator;
-        this.printer = configuration.printer;
+        this.configuration = configuration;
     }
 
     /**
      * Runs the application.
      */
     public void run() {
-        Blockchain blockchain = blockchainGenerator.generate(lengthOfBlockchain);
+        Blockchain blockchain = generateBlockchain();
         validateBlockchain(blockchain);
+        printBlockchain(blockchain);
+    }
+
+    private Blockchain generateBlockchain() {
+        BlockchainGenerator blockchainGenerator = configuration.blockchainGenerator;
+        int lengthOfBlockchain = configuration.lengthOfBlockchain;
+        return blockchainGenerator.generate(lengthOfBlockchain);
+    }
+
+    private void printBlockchain(Blockchain blockchain) {
+        Printer printer = configuration.printer;
         printer.print(blockchain);
     }
 }
