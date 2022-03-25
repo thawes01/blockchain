@@ -4,32 +4,32 @@ public class Application {
     private final Configuration configuration;
 
     private static void validateConfiguration(Configuration configuration) {
-        validateLengthOfBlockchain(configuration);
-        validateBlockchainGenerator(configuration);
-        validatePrinter(configuration);
+        checkLengthOfBlockchainNonNegative(configuration);
+        checkBlockchainGeneratorNotNull(configuration);
+        checkPrinterNotNull(configuration);
     }
 
-    private static void validateBlockchain(Blockchain blockchain) {
-        if (!blockchain.validate()) {
-            throw new RuntimeException("Blockchain generated not valid, there is a problem with blockchain generation");
-        }
-    }
-
-    private static void validateLengthOfBlockchain(Configuration configuration) {
+    private static void checkLengthOfBlockchainNonNegative(Configuration configuration) {
         if (configuration.lengthOfBlockchain < 0) {
             throw new RuntimeException("Length of blockchain negative, must be non-negative");
         }
     }
 
-    private static void validateBlockchainGenerator(Configuration configuration) {
+    private static void checkBlockchainGeneratorNotNull(Configuration configuration) {
         if (configuration.blockchainGenerator == null) {
             throw new RuntimeException("Blockchain generator is null, must be non-null");
         }
     }
 
-    private static void validatePrinter(Configuration configuration) {
+    private static void checkPrinterNotNull(Configuration configuration) {
         if (configuration.printer == null) {
             throw new RuntimeException("Printer is null, must be non-null");
+        }
+    }
+
+    private static void validateBlockchain(Blockchain blockchain) {
+        if (!blockchain.validate()) {
+            throw new RuntimeException("Blockchain generated not valid, there is a problem with blockchain generation");
         }
     }
 
