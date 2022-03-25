@@ -5,14 +5,16 @@ import java.util.*;
 
 public class Printer {
     private final PrintStream printStream;
+    private final int generationTime;
 
     /**
      * Allocates a {@code Printer} for printing information about blockchains.
      *
      * @param printStream  a stream to print the information to.
      */
-    public Printer(PrintStream printStream) {
+    public Printer(PrintStream printStream, int generationTime) {
         this.printStream = printStream;
+        this.generationTime = generationTime;
     }
 
     /**
@@ -40,7 +42,8 @@ public class Printer {
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
                 String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
-                String.format("Hash of the block:\n%s\n", block.computeHash());
+                String.format("Hash of the block:\n%s\n", block.computeHash()) +
+                String.format("Block was generating for %d seconds\n", generationTime);
     }
 
     /**
