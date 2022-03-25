@@ -34,10 +34,10 @@ public class Printer {
      * @param block  a block to print information about.
      */
     public void print(Block block) {
-        printStream.print(blockInformation(block));
+        printStream.print(blockInformation(block, generationTime));
     }
 
-    private String blockInformation(Block block) {
+    private String blockInformation(Block block, int generationTime) {
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
@@ -64,8 +64,28 @@ public class Printer {
     private List<String> compileBlockInformationStrings(Blockchain blockchain) {
         List<String> blockInformationStrings = new ArrayList<>();
         for (var block : blockchain) {
-            blockInformationStrings.add("Block:\n" + blockInformation(block));
+            blockInformationStrings.add("Block:\n" + blockInformation(block, generationTime));
         }
         return blockInformationStrings;
+    }
+
+    public void print(BlockGenerationRecord... blockGenerationRecords) {
+        String report = compileBlockGenerationRecordsReport(blockGenerationRecords);
+        printStream.print(report);
+    }
+
+    private String compileBlockGenerationRecordsReport(BlockGenerationRecord... blockGenerationRecords) {
+        String[] blockInformationStrings = new String[blockGenerationRecords.length];
+        for (int i = 0; i < blockGenerationRecords.length; i++) {
+            blockInformationStrings[i] = "Block:\n" +
+                    compileBlockGenerationRecordReport(blockGenerationRecords[i]);
+        }
+        return String.join("\n", blockInformationStrings);
+    }
+
+    private String compileBlockGenerationRecordReport(BlockGenerationRecord blockGenerationRecord) {
+        Block block = blockGenerationRecord.block;
+        int generationTime = blockGenerationRecord.generationTime;
+        return blockInformation(block, generationTime);
     }
 }

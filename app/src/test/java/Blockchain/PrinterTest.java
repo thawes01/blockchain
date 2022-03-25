@@ -114,4 +114,46 @@ public class PrinterTest {
         }
         return String.join("\n", blockInformationStrings);
     }
+
+    @Test
+    void printWritesBlockGenerationRecordsWithMultipleRecordsInExpectedFormat() {
+        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
+        int generationTime1 = 12;
+
+        Block block2 = BlockCreator.withCreationTimestamp(1L);
+        int generationTime2 = 13;
+
+        Block block3 = BlockCreator.withCreationTimestamp(2L);
+        int generationTime3 = 14;
+
+        BlockGenerationRecord blockGenerationRecord1 = new BlockGenerationRecord(block1, generationTime1);
+        BlockGenerationRecord blockGenerationRecord2 = new BlockGenerationRecord(block2, generationTime2);
+        BlockGenerationRecord blockGenerationRecord3 = new BlockGenerationRecord(block3, generationTime3);
+
+        BlockGenerationRecord[] blockGenerationRecords = new BlockGenerationRecord[] {
+                blockGenerationRecord1,
+                blockGenerationRecord2,
+                blockGenerationRecord3
+        };
+        Printer printer = new Printer(printStream, generationTime);
+
+        String expectedContents = blockchainReport(blockGenerationRecords);
+        printer.print(blockGenerationRecords);
+        String printContents = outputStream.toString();
+        assertEquals(expectedContents, printContents);
+    }
+
+    private String blockchainReport(BlockGenerationRecord... records) {
+        String[] blockInformationStrings = new String[records.length];
+        for (int i = 0; i < records.length; i++) {
+            Block block = records[i].block;
+            int generationTime = records[i].generationTime;
+            blockInformationStrings[i] = "Block:\n" +
+                    blockReport(block.getId(), block.getCreationTimestamp(),
+                            block.getMagicNumber(), block.getPreviousBlockHash(),
+                            block.computeHash(),
+                            generationTime);
+        }
+        return String.join("\n", blockInformationStrings);
+    }
 }
