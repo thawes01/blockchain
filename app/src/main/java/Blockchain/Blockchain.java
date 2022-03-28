@@ -82,12 +82,18 @@ public class Blockchain implements Iterable<BlockchainEntry> {
     }
 
     /**
-     * Retrieve (but do not remove) the last block in this blockchain.
+     * Retrieves (but does not remove) the last entry in this blockchain.
      *
-     * @return  the last block in this blockchain
+     * @return  the last entry in this blockchain
+     *
+     * @throws EmptyBlockchainException  if the blockchain is empty
      */
-    public Block peek() {
-        return this.lastBlock;
+    public BlockchainEntry getLastEntry() {
+        if (length == 0) {
+            throw new EmptyBlockchainException(
+                    "Tried getting last entry of blockchain, but blockchain is empty");
+        }
+        return blockchainEntries.get(length - 1);
     }
 
     /**
@@ -143,10 +149,9 @@ public class Blockchain implements Iterable<BlockchainEntry> {
     /**
      * Gets the ID of the last block in this blockchain.
      *
-     * If the blockchain is empty, then an {@link EmptyBlockchainException} is
-     * thrown.
-     *
      * @return  the ID of the last block in this blockchain
+     *
+     * @throws EmptyBlockchainException  if the blockchain is empty
      */
     public int getLastBlockId() {
         if (length == 0) {

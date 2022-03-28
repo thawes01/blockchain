@@ -9,12 +9,27 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class BlockchainTest {
     private Blockchain blockchain;
-    private final String initialHash = "000";
-    private final int firstBlockId = 0;
-    private final BasicBlockData firstBlockData = new BasicBlockData(firstBlockId, initialHash);
-    private final Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-    private final Block block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
-    private final Block block2dummyHash = BlockCreator.withBasicBlockData(new BasicBlockData(1, "999"));
+    private static final String initialHash = "000";
+    private static final int firstBlockId = 0;
+    private static final BasicBlockData firstBlockData = new BasicBlockData(firstBlockId, initialHash);
+    private static Block block1;
+    private static BlockchainEntry blockchainEntry1;
+    private static Block block2;
+    private static BlockchainEntry blockchainEntry2;
+    private static Block block2WithCustomHash;
+    private static BlockchainEntry blockchainEntry2WithCustomHash;
+
+    @BeforeAll
+    static void setUpStubs() {
+        block1 = BlockCreator.withBasicBlockData(firstBlockData);
+        blockchainEntry1 = new BlockchainEntry(block1, 21);
+
+        block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
+        blockchainEntry2 = new BlockchainEntry(block2, 22);
+
+        block2WithCustomHash = BlockCreator.withBasicBlockData(new BasicBlockData(1, "999"));
+        blockchainEntry2WithCustomHash = new BlockchainEntry(block2WithCustomHash, 22);
+    }
 
     @BeforeEach
     void setUpBlockchain() {
@@ -23,26 +38,31 @@ public class BlockchainTest {
 
     @Test
     void getBlocksReturnsListOfBlocks() {
-        blockchain.push(block1);
-        blockchain.push(block2);
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
 
         assertEquals(block1, blockchain.getBlocks().get(0));
         assertEquals(block2, blockchain.getBlocks().get(1));
     }
 
     @Test
-    void pushAddsBlockToBlockchain() {
-        blockchain.push(block1);
-
-        assertEquals(block1, blockchain.peek());
+    void getLastEntryThrowsEmptyBlockchainExceptionIfEmpty() {
+        assertThrows(EmptyBlockchainException.class, () -> blockchain.getLastEntry());
     }
 
     @Test
-    void pushAddsBlockToTopOfChain() {
-        blockchain.push(block1);
-        blockchain.push(block2);
+    void pushAddsBlockchainEntryToBlockchain() {
+        blockchain.push(blockchainEntry1);
 
-        assertEquals(block2, blockchain.peek());
+        assertEquals(blockchainEntry1, blockchain.getLastEntry());
+    }
+
+    @Test
+    void pushAddsBlockchainEntryToTopOfChain() {
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
+
+        assertEquals(blockchainEntry2, blockchain.getLastEntry());
     }
 
     @Test
@@ -51,8 +71,10 @@ public class BlockchainTest {
     void verifyReturnsTrueIfAllConditionsSatisfied() {
         BasicBlockData basicBlockData2 = new BasicBlockData(1, block1.computeHash());
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
-        blockchain.push(block1);
-        blockchain.push(block2);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 12);
+
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
 
         assertTrue(blockchain.validate());
     }
@@ -61,32 +83,40 @@ public class BlockchainTest {
     void verifyReturnsFalseIfFirstBlockDoesNotHaveCorrectPreviousHash() {
         BasicBlockData basicBlockData1 = new BasicBlockData(0, "F00");
         Block block1 = BlockCreator.withBasicBlockData(basicBlockData1);
+        BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, 11);
+
         BasicBlockData basicBlockData2 = new BasicBlockData(1, block1.computeHash());
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 12);
+
         BasicBlockData basicBlockData3 = new BasicBlockData(2, block2.computeHash());
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
-        blockchain.push(block1);
-        blockchain.push(block2);
-        blockchain.push(block3);
+        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 12);
+
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
+        blockchain.push(blockchainEntry3);
 
         assertFalse(blockchain.validate());
     }
 
     @Test
     void verifyReturnsFalseIfSuccessiveHashesDoNotAgree() {
-        blockchain.push(block1);
-        blockchain.push(block2dummyHash);
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2WithCustomHash);
 
         assertFalse(blockchain.validate());
     }
 
     @Test
     void verifyReturnsFalseIfThreeBlocksSuccessiveHashesDoNotAgree() {
-        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2dummyHash.computeHash());
+        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2WithCustomHash.computeHash());
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
-        blockchain.push(block1);
-        blockchain.push(block2dummyHash);
-        blockchain.push(block3);
+        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 13);
+
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2WithCustomHash);
+        blockchain.push(blockchainEntry3);
 
         assertFalse(blockchain.validate());
     }
@@ -95,9 +125,9 @@ public class BlockchainTest {
     void iteratorYieldsBlockchainEntriesFromBlockchainInOrder() {
         BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, 10);
 
-        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2dummyHash, 11);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2WithCustomHash, 11);
 
-        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2dummyHash.computeHash());
+        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2WithCustomHash.computeHash());
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 12);
 
@@ -116,7 +146,9 @@ public class BlockchainTest {
     @ValueSource(ints = {0, 1, 2})
     void getLengthReturnsNumberOfBlocksInBlockchain(int numBlocks) {
         for (int i = 0; i < numBlocks; i++) {
-            blockchain.push(BlockCreator.withBasicBlockData(firstBlockData));
+            BlockchainEntry blockchainEntry = new BlockchainEntry(
+                    BlockCreator.withBasicBlockData(firstBlockData), 12);
+            blockchain.push(blockchainEntry);
         }
 
         assertEquals(numBlocks, blockchain.getLength());
@@ -131,10 +163,10 @@ public class BlockchainTest {
 
     @Test
     void getLastBlockHashReturnsLastBlockHash() {
-        blockchain.push(block1);
-        blockchain.push(block2dummyHash);
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2WithCustomHash);
 
-        assertEquals(block2dummyHash.computeHash(), blockchain.getLastBlockHash());
+        assertEquals(block2WithCustomHash.computeHash(), blockchain.getLastBlockHash());
     }
 
     @ParameterizedTest
@@ -142,14 +174,15 @@ public class BlockchainTest {
     void getLastBlockIdReturnsLastBlockIdOfNonemptyBlockchain(int id) {
         BasicBlockData basicBlockData2 = new BasicBlockData(id, "999");
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
-        blockchain.push(block1);
-        blockchain.push(block2);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 12);
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
 
         assertEquals(block2.getId(), blockchain.getLastBlockId());
     }
 
     @Test
-    void getLastBlockIdThrowsRuntimeExceptionForEmptyBlockchain() {
+    void getLastBlockIdThrowsEmptyBlockchainExceptionForEmptyBlockchain() {
         assertThrows(EmptyBlockchainException.class, () -> blockchain.getLastBlockId());
     }
 }
