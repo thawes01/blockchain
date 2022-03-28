@@ -8,7 +8,7 @@ public class Blockchain implements Iterable<BlockchainEntry> {
     private String lastBlockHash;
     private Block penultimateBlock;
     private int length = 0;
-    public final List<Block> blocks = new ArrayList<>();
+    private final List<Block> blocks = new ArrayList<>();
     private final List<BlockchainEntry> blockchainEntries = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
@@ -24,6 +24,15 @@ public class Blockchain implements Iterable<BlockchainEntry> {
     public Blockchain(String initialHash) {
         this.initialHash = initialHash;
         lastBlockHash = initialHash;
+    }
+
+    /**
+     * Gets the {@code List} of {@link Block}s contained within this blockchain.
+     *
+     * @return  the list of blockchain blocks
+     */
+    public List<Block> getBlocks() {
+        return blocks;
     }
 
     /**

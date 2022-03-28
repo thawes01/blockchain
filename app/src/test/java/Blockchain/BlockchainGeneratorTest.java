@@ -34,7 +34,7 @@ public class BlockchainGeneratorTest {
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
 
         int id = 0;
-        for (var block : blockchain.blocks) {
+        for (var block : blockchain.getBlocks()) {
             assertEquals(id, block.getId());
             id++;
         }

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import java.util.Iterator;
 
 public class BlockchainTest {
     private Blockchain blockchain;
@@ -17,6 +16,17 @@ public class BlockchainTest {
     @BeforeEach
     void setUpBlockchain() {
         blockchain = new Blockchain(initialHash);
+    }
+
+    @Test
+    void getBlocksReturnsListOfBlocks() {
+        Block block1 = BlockCreator.withDefaultArgs();
+        Block block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
+        blockchain.push(block1);
+        blockchain.push(block2);
+
+        assertEquals(block1, blockchain.getBlocks().get(0));
+        assertEquals(block2, blockchain.getBlocks().get(1));
     }
 
     @Test
