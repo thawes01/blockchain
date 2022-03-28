@@ -19,6 +19,14 @@ public class BlockchainGeneratorTest {
     }
 
     @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2})
+    void getProofOfWorkNumberReturnsProofOfWorkNumber(int proofOfWorkNumber) {
+        BlockchainGenerator blockchainGenerator = new BlockchainGenerator(proofOfWorkNumber);
+
+        assertEquals(proofOfWorkNumber, blockchainGenerator.getProofOfWorkNumber());
+    }
+
+    @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3})
     void generateReturnsBlockchainWithCorrectNumberOfBlocks(int numBlocks) {
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
