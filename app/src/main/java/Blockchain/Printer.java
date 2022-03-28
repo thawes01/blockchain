@@ -5,21 +5,14 @@ import java.util.*;
 
 public class Printer {
     private final PrintStream printStream;
-    private final int generationTime;
 
     /**
      * Allocates a {@code Printer} for printing information about blockchains.
      *
      * @param printStream  a stream to print the information to.
      */
-    public Printer(PrintStream printStream, int generationTime) {
-        this.printStream = printStream;
-        this.generationTime = generationTime;
-    }
-
     public Printer(PrintStream printStream) {
         this.printStream = printStream;
-        generationTime = 12;
     }
 
     /**
@@ -32,14 +25,14 @@ public class Printer {
     }
 
     /**
-     * Print information about a block to this {@code Printer}'s stream.
+     * Prints information about a blockchain entry to this {@code Printer}'s stream.
      *
      * Note: the string printed ends with a newline character.
      *
-     * @param block  a block to print information about.
+     * @param blockchainEntry  a blockchain entry to print information about
      */
-    public void print(Block block) {
-        printStream.print(blockInformation(block, generationTime));
+    public void print(BlockchainEntry blockchainEntry) {
+        printStream.print(blockInformation(blockchainEntry.block, blockchainEntry.generationTime));
     }
 
     private String blockInformation(Block block, int generationTime) {

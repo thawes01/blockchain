@@ -25,7 +25,7 @@ public class PrinterTest {
 
     @Test
     void getPrintStreamReturnsExpectedPrintStream() {
-        Printer printer = new Printer(printStream, generationTime);
+        Printer printer = new Printer(printStream);
         assertEquals(printStream, printer.getPrintStream());
     }
 
@@ -40,16 +40,18 @@ public class PrinterTest {
             0,    10,                 a1,                  12
             1,    20,                 b2,                  13
             """)
-    void printWritesBlockReportExpectedFormat(int id, long creationTimestamp,
+    void printReportsSingleBlockchainEntryInExpectedFormat(int id, long creationTimestamp,
                                               String previousBlockHash,
                                               int generationTime) {
         StopClock stopClock = new StopClock(defaultFixedClock(creationTimestamp));
         BasicBlockData basicBlockData = new BasicBlockData(id, previousBlockHash);
         Block block = new Block(basicBlockData, stopClock);
-        Printer printer = new Printer(printStream, generationTime);
+        BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
+        Printer printer = new Printer(printStream);
+
+        printer.print(blockchainEntry);
 
         String expectedContents = blockReport(block, generationTime);
-        printer.print(block);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
     }
