@@ -64,11 +64,12 @@ public class PrinterTest {
     }
 
     @Test
-    void printWritesReportOfBlockchainWithSingleBlockInExpectedFormat() {
+    void printReportsBlockchainWithSingleBlockInExpectedFormat() {
         Block block = BlockCreator.withBasicBlockData(firstBlockData);
+        BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
         Blockchain blockchain = new Blockchain(initialHash);
-        blockchain.push(block);
-        Printer printer = new Printer(printStream, generationTime);
+        blockchain.push(blockchainEntry);
+        Printer printer = new Printer(printStream);
 
         String expectedContents = "Block:\n" + blockReport(block, generationTime);
         printer.print(blockchain);
@@ -79,13 +80,19 @@ public class PrinterTest {
     @Test
     void printWritesReportOfBlockchainWithMultipleBlocksInExpectedFormat() {
         Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
+        BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, generationTime);
+
         Block block2 = BlockCreator.withCreationTimestamp(1L);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, generationTime);
+
         Block block3 = BlockCreator.withCreationTimestamp(2L);
+        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime);
+
         Blockchain blockchain = new Blockchain(initialHash);
-        blockchain.push(block1);
-        blockchain.push(block2);
-        blockchain.push(block3);
-        Printer printer = new Printer(printStream, generationTime);
+        blockchain.push(blockchainEntry1);
+        blockchain.push(blockchainEntry2);
+        blockchain.push(blockchainEntry3);
+        Printer printer = new Printer(printStream);
 
         String expectedContents = blockchainReport(block1, block2, block3);
         printer.print(blockchain);

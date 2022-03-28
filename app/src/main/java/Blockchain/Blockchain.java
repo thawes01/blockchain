@@ -5,6 +5,7 @@ import java.util.*;
 public class Blockchain implements Iterable<Block> {
     private final String initialHash;
     private Block lastBlock;
+    public int lastBlockGenerationTime;
     private String lastBlockHash;
     private Block penultimateBlock;
     private int length = 0;
@@ -35,6 +36,11 @@ public class Blockchain implements Iterable<Block> {
         updateBlockCaches(block);
         updateLength();
         updateVerification();
+    }
+
+    public void push(BlockchainEntry blockchainEntry) {
+        push(blockchainEntry.block);
+        lastBlockGenerationTime = blockchainEntry.generationTime;
     }
 
     private void updateBlockCaches(Block block) {

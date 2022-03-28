@@ -17,6 +17,11 @@ public class Printer {
         this.generationTime = generationTime;
     }
 
+    public Printer(PrintStream printStream) {
+        this.printStream = printStream;
+        generationTime = 12;
+    }
+
     /**
      * Returns the print stream associated with this printer.
      *
@@ -64,7 +69,7 @@ public class Printer {
     private List<String> compileBlockInformationStrings(Blockchain blockchain) {
         List<String> blockInformationStrings = new ArrayList<>();
         for (var block : blockchain) {
-            blockInformationStrings.add("Block:\n" + blockInformation(block, generationTime));
+            blockInformationStrings.add("Block:\n" + blockInformation(block, blockchain.lastBlockGenerationTime));
         }
         return blockInformationStrings;
     }
