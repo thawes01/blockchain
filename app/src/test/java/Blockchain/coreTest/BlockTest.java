@@ -1,8 +1,9 @@
-package Blockchain;
+package Blockchain.coreTest;
 
+import Blockchain.core.*;
 import static Blockchain.testUtils.Time.defaultFixedClock;
 import Blockchain.testUtils.BasicBlockDataCreator;
-import Blockchain.testUtils.Time;
+import Blockchain.utilities.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

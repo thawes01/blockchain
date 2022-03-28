@@ -1,5 +1,8 @@
 package Blockchain;
 
+import Blockchain.core.*;
+import Blockchain.io.Printer;
+
 public class Application {
     private final Configuration configuration;
 

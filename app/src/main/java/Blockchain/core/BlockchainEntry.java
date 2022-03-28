@@ -1,4 +1,4 @@
-package Blockchain;
+package Blockchain.core;
 
 /**
  * Represents an entry in a blockchain.

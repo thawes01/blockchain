@@ -1,6 +1,7 @@
 /*
 The following code was taken from the JetBrains Academy platform:
-  * Declaration of the StringUtil class
+  * Declaration of the StringUtil class (the original version was package-scope,
+    whereas the code below includes the public access modifier).
   * Declaration and implementation of the applySha256 static method within
     StringUtil
   * The required java.security.MessageDigest import statement
@@ -13,11 +14,11 @@ as accessed on 2022-02-02. This code is supplied to the package author for
 non-commercial use only.
  */
 
-package Blockchain;
+package Blockchain.utilities;
 
 import java.security.MessageDigest;
 
-class StringUtil {
+public class StringUtil {
     /* Applies Sha256 to a string and returns a hash. */
     public static String applySha256(String input){
         try {

@@ -1,4 +1,4 @@
-package Blockchain;
+package Blockchain.core;
 
 public class BasicBlockData {
     private final int id;

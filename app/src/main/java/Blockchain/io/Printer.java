@@ -1,5 +1,6 @@
-package Blockchain;
+package Blockchain.io;
 
+import Blockchain.core.*;
 import java.io.PrintStream;
 import java.util.*;
 

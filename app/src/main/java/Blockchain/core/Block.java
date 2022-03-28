@@ -1,4 +1,6 @@
-package Blockchain;
+package Blockchain.core;
+
+import Blockchain.utilities.*;
 
 public class Block {
     private final BasicBlockData basicBlockData;
