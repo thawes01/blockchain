@@ -3,6 +3,7 @@ package Blockchain;
 import static Blockchain.testUtils.Time.defaultFixedClock;
 import static org.junit.jupiter.api.Assertions.*;
 import Blockchain.testUtils.BlockCreator;
+import Blockchain.utilities.StopClock;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

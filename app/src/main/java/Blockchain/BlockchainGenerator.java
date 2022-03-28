@@ -1,5 +1,7 @@
 package Blockchain;
 
+import Blockchain.utilities.StopClock;
+
 public class BlockchainGenerator {
     private static final int FIRST_BLOCK_ID = 0;
     private static final String INITIAL_HASH = "0";

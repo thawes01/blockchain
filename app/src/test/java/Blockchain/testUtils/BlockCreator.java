@@ -2,7 +2,7 @@ package Blockchain.testUtils;
 
 import Blockchain.BasicBlockData;
 import Blockchain.Block;
-import Blockchain.StopClock;
+import Blockchain.utilities.StopClock;
 
 public class BlockCreator {
     private static final BasicBlockData DUMMY_BASIC_DATA = BasicBlockDataCreator.withDefaultArgs();

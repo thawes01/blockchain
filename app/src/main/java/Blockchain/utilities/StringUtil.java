@@ -14,7 +14,7 @@ as accessed on 2022-02-02. This code is supplied to the package author for
 non-commercial use only.
  */
 
-package Blockchain;
+package Blockchain.utilities;
 
 import java.security.MessageDigest;
 

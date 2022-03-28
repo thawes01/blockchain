@@ -1,5 +1,8 @@
 package Blockchain;
 
+import Blockchain.utilities.StopClock;
+import Blockchain.utilities.StringUtil;
+
 public class Block {
     private final BasicBlockData basicBlockData;
     private final long creationTimestamp;
