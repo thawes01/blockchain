@@ -10,6 +10,7 @@ public class Blockchain implements Iterable<Block> {
     private Block penultimateBlock;
     private int length = 0;
     private final List<Block> blocks = new ArrayList<>();
+    public List<BlockchainEntry> blockchainEntries = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
 
@@ -39,6 +40,7 @@ public class Blockchain implements Iterable<Block> {
     }
 
     public void push(BlockchainEntry blockchainEntry) {
+        blockchainEntries.add(blockchainEntry);
         push(blockchainEntry.block);
         lastBlockGenerationTime = blockchainEntry.generationTime;
     }

@@ -15,7 +15,6 @@ public class PrinterTest {
     private final String initialHash = "0";
     private final int firstBlockId = 0;
     private final BasicBlockData firstBlockData = new BasicBlockData(firstBlockId, initialHash);
-    private final int generationTime = 12;
 
     @BeforeEach
     void setUpOutputStreams() {
@@ -68,6 +67,7 @@ public class PrinterTest {
     @Test
     void printReportsBlockchainWithSingleBlockInExpectedFormat() {
         Block block = BlockCreator.withBasicBlockData(firstBlockData);
+        int generationTime = 12;
         BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
         Blockchain blockchain = new Blockchain(initialHash);
         blockchain.push(blockchainEntry);
@@ -82,13 +82,16 @@ public class PrinterTest {
     @Test
     void printWritesReportOfBlockchainWithMultipleBlocksInExpectedFormat() {
         Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, generationTime);
+        int generationTime1 = 12;
+        BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, generationTime1);
 
         Block block2 = BlockCreator.withCreationTimestamp(1L);
-        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, generationTime);
+        int generationTime2 = 13;
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, generationTime2);
 
         Block block3 = BlockCreator.withCreationTimestamp(2L);
-        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime);
+        int generationTime3 = 14;
+        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime3);
 
         Blockchain blockchain = new Blockchain(initialHash);
         blockchain.push(blockchainEntry1);
@@ -96,18 +99,19 @@ public class PrinterTest {
         blockchain.push(blockchainEntry3);
         Printer printer = new Printer(printStream);
 
-        String expectedContents = blockchainReport(block1, block2, block3);
+        String expectedContents = blockchainReport(
+                blockchainEntry1, blockchainEntry2, blockchainEntry3);
         printer.print(blockchain);
         String printContents = outputStream.toString();
         assertEquals(expectedContents, printContents);
     }
 
-    private String blockchainReport(Block... blocks) {
-        String[] blockInformationStrings = new String[blocks.length];
-        for (int i = 0; i < blocks.length; i++) {
-            Block block = blocks[i];
+    private String blockchainReport(BlockchainEntry... blockchainEntries) {
+        String[] blockInformationStrings = new String[blockchainEntries.length];
+        for (int i = 0; i < blockchainEntries.length; i++) {
+            BlockchainEntry entry = blockchainEntries[i];
             blockInformationStrings[i] = "Block:\n" +
-                    blockReport(block, generationTime);
+                    blockReport(entry.block, entry.generationTime);
         }
         return String.join("\n", blockInformationStrings);
     }
