@@ -37,11 +37,11 @@ public class PrinterTest {
     @CsvSource(textBlock = """
             # Id, Creation Timestamp, Previous Block Hash, Generation time
             0,    10,                 a1,                  12
-            1,    20,                 b2,                  13
+            1,    20,                 b2,                  999
             """)
     void printReportsSingleBlockchainEntryInExpectedFormat(int id, long creationTimestamp,
                                               String previousBlockHash,
-                                              int generationTime) {
+                                              long generationTime) {
         StopClock stopClock = new StopClock(defaultFixedClock(creationTimestamp));
         BasicBlockData basicBlockData = new BasicBlockData(id, previousBlockHash);
         Block block = new Block(basicBlockData, stopClock);
@@ -55,19 +55,20 @@ public class PrinterTest {
         assertEquals(expectedContents, printContents);
     }
 
-    private String blockReport(Block block, long generationDuration) {
+    private String blockReport(Block block, long generationTime) {
+        double generationTimeSeconds = (double) generationTime / 1000;
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
                 String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
                 String.format("Hash of the block:\n%s\n", block.computeHash()) +
-                String.format("Block was generating for %d seconds\n", generationDuration);
+                String.format("Block was generating for %.0f seconds\n", generationTimeSeconds);
     }
 
     @Test
     void printReportsBlockchainWithSingleBlockInExpectedFormat() {
         Block block = BlockCreator.withBasicBlockData(firstBlockData);
-        int generationTime = 12;
+        long generationTime = 1500;
         BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
         Blockchain blockchain = new Blockchain(initialHash);
         blockchain.push(blockchainEntry);
@@ -82,15 +83,15 @@ public class PrinterTest {
     @Test
     void printWritesReportOfBlockchainWithMultipleBlocksInExpectedFormat() {
         Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        int generationTime1 = 12;
+        int generationTime1 = 1000;
         BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, generationTime1);
 
         Block block2 = BlockCreator.withCreationTimestamp(1L);
-        int generationTime2 = 13;
+        int generationTime2 = 1499;
         BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, generationTime2);
 
         Block block3 = BlockCreator.withCreationTimestamp(2L);
-        int generationTime3 = 14;
+        int generationTime3 = 2001;
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime3);
 
         Blockchain blockchain = new Blockchain(initialHash);

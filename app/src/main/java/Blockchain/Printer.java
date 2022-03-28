@@ -6,6 +6,10 @@ import java.util.*;
 public class Printer {
     private final PrintStream printStream;
 
+    private static double millisToSeconds(long milliseconds) {
+        return (double) milliseconds / 1000;
+    }
+
     /**
      * Allocates a {@code Printer} for printing information about blockchains.
      *
@@ -37,13 +41,13 @@ public class Printer {
 
     private String report(BlockchainEntry blockchainEntry) {
         Block block = blockchainEntry.block();
-        long generationTime = blockchainEntry.generationTime();
+        double generationTimeSeconds = millisToSeconds(blockchainEntry.generationTime());
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
                 String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
                 String.format("Hash of the block:\n%s\n", block.computeHash()) +
-                String.format("Block was generating for %d seconds\n", generationTime);
+                String.format("Block was generating for %.0f seconds\n", generationTimeSeconds);
     }
 
     /**
