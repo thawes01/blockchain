@@ -37,8 +37,7 @@ public class Configuration {
     }
 
     private Configuration addPrinterFrom(Settings settings) {
-        int generationTime = 99;
-        printer = new Printer(settings.printStream, generationTime);
+        printer = new Printer(settings.printStream);
         return this;
     }
 }

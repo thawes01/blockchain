@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BlockchainGeneratorTest {
@@ -34,7 +36,7 @@ public class BlockchainGeneratorTest {
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
 
         int id = 0;
-        for (var block : blockchain) {
+        for (var block : blockchain.getBlocks()) {
             assertEquals(id, block.getId());
             id++;
         }
@@ -50,5 +52,19 @@ public class BlockchainGeneratorTest {
         Blockchain blockchain = blockchainGenerator.generate(numBlocks);
 
         assertTrue(blockchain.getLastBlockHash().startsWith(zeros));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, 1, 2, 3})
+    void generateProducesBlockchainWithRecordsOfBlockGenerationTime(int blockchainLength) {
+        StopClock stopClock = Mockito.mock(StopClock.class);
+        BlockchainGenerator blockchainGenerator = new BlockchainGenerator(2, stopClock);
+
+        blockchainGenerator.generate(blockchainLength);
+
+        // Check stop clock used as expected for each block in the chain
+        Mockito.verify(stopClock, Mockito.times(blockchainLength)).start();
+        Mockito.verify(stopClock, Mockito.times(blockchainLength)).stop();
+        Mockito.verify(stopClock, Mockito.times(blockchainLength)).getElapsedTime();
     }
 }

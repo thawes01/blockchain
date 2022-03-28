@@ -5,16 +5,18 @@ import java.util.*;
 
 public class Printer {
     private final PrintStream printStream;
-    private final int generationTime;
+
+    private static double millisToSeconds(long milliseconds) {
+        return (double) milliseconds / 1000;
+    }
 
     /**
      * Allocates a {@code Printer} for printing information about blockchains.
      *
      * @param printStream  a stream to print the information to.
      */
-    public Printer(PrintStream printStream, int generationTime) {
+    public Printer(PrintStream printStream) {
         this.printStream = printStream;
-        this.generationTime = generationTime;
     }
 
     /**
@@ -27,44 +29,46 @@ public class Printer {
     }
 
     /**
-     * Print information about a block to this {@code Printer}'s stream.
+     * Prints information about a blockchain entry to this {@code Printer}'s stream.
      *
      * Note: the string printed ends with a newline character.
      *
-     * @param block  a block to print information about.
+     * @param blockchainEntry  a blockchain entry to print information about
      */
-    public void print(Block block) {
-        printStream.print(blockInformation(block, generationTime));
+    public void print(BlockchainEntry blockchainEntry) {
+        printStream.print(report(blockchainEntry));
     }
 
-    private String blockInformation(Block block, int generationTime) {
+    private String report(BlockchainEntry blockchainEntry) {
+        Block block = blockchainEntry.block();
+        double generationTimeSeconds = millisToSeconds(blockchainEntry.generationTime());
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
                 String.format("Hash of the previous block:\n%s\n", block.getPreviousBlockHash()) +
                 String.format("Hash of the block:\n%s\n", block.computeHash()) +
-                String.format("Block was generating for %d seconds\n", generationTime);
+                String.format("Block was generating for %.0f seconds\n", generationTimeSeconds);
     }
 
     /**
-     * Print information about a blockchain to this {@code Printer}'s stream.
+     * Prints information about a blockchain to this {@code Printer}'s stream.
      *
      * Note: the string printed ends with a newline character.
      *
      * @param blockchain  a blockchain to print information about.
      */
     public void print(Blockchain blockchain) {
-        printStream.print(blockchainInformation(blockchain));
+        printStream.print(report(blockchain));
     }
 
-    private String blockchainInformation(Blockchain blockchain) {
-        return String.join("\n", compileBlockInformationStrings(blockchain));
+    private String report(Blockchain blockchain) {
+        return String.join("\n", compileBlockchainEntryReports(blockchain));
     }
 
-    private List<String> compileBlockInformationStrings(Blockchain blockchain) {
+    private List<String> compileBlockchainEntryReports(Blockchain blockchain) {
         List<String> blockInformationStrings = new ArrayList<>();
-        for (var block : blockchain) {
-            blockInformationStrings.add("Block:\n" + blockInformation(block, generationTime));
+        for (var blockchainEntry : blockchain) {
+            blockInformationStrings.add("Block:\n" + report(blockchainEntry));
         }
         return blockInformationStrings;
     }

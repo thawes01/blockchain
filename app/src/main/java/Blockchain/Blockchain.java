@@ -2,13 +2,14 @@ package Blockchain;
 
 import java.util.*;
 
-public class Blockchain implements Iterable<Block> {
+public class Blockchain implements Iterable<BlockchainEntry> {
     private final String initialHash;
     private Block lastBlock;
     private String lastBlockHash;
     private Block penultimateBlock;
     private int length = 0;
     private final List<Block> blocks = new ArrayList<>();
+    private final List<BlockchainEntry> blockchainEntries = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
 
@@ -26,11 +27,22 @@ public class Blockchain implements Iterable<Block> {
     }
 
     /**
-     * Adds a block to the end of this blockchain.
+     * Gets the {@code List} of {@link Block}s contained within this blockchain.
      *
-     * @param block  a block to add to the end of the chain
+     * @return  the list of blockchain blocks
      */
-    public void push(Block block) {
+    public List<Block> getBlocks() {
+        return blocks;
+    }
+
+    /**
+     * Adds an entry to the end of this blockchain.
+     *
+     * @param blockchainEntry  a blockchain entry
+     */
+    public void add(BlockchainEntry blockchainEntry) {
+        blockchainEntries.add(blockchainEntry);
+        Block block = blockchainEntry.block();
         blocks.add(block);
         updateBlockCaches(block);
         updateLength();
@@ -67,12 +79,18 @@ public class Blockchain implements Iterable<Block> {
     }
 
     /**
-     * Retrieve (but do not remove) the last block in this blockchain.
+     * Retrieves (but does not remove) the last entry in this blockchain.
      *
-     * @return  the last block in this blockchain
+     * @return  the last entry in this blockchain
+     *
+     * @throws EmptyBlockchainException  if the blockchain is empty
      */
-    public Block peek() {
-        return this.lastBlock;
+    public BlockchainEntry getLastEntry() {
+        if (length == 0) {
+            throw new EmptyBlockchainException(
+                    "Tried getting last entry of blockchain, but blockchain is empty");
+        }
+        return blockchainEntries.get(length - 1);
     }
 
     /**
@@ -94,8 +112,14 @@ public class Blockchain implements Iterable<Block> {
         return startingHashCorrect && successiveBlockHashesAgree;
     }
 
-    public Iterator<Block> iterator() {
-        return blocks.iterator();
+    /**
+     * Returns an iterator of {@link BlockchainEntry} objects that make up this
+     * blockchain.
+     *
+     * @return  an iterator of blockchain entries
+     */
+    public Iterator<BlockchainEntry> iterator() {
+        return blockchainEntries.iterator();
     }
 
     /**
@@ -122,10 +146,9 @@ public class Blockchain implements Iterable<Block> {
     /**
      * Gets the ID of the last block in this blockchain.
      *
-     * If the blockchain is empty, then an {@link EmptyBlockchainException} is
-     * thrown.
-     *
      * @return  the ID of the last block in this blockchain
+     *
+     * @throws EmptyBlockchainException  if the blockchain is empty
      */
     public int getLastBlockId() {
         if (length == 0) {

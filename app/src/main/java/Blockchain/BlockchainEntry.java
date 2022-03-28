@@ -1,11 +1,14 @@
 package Blockchain;
 
-public class BlockchainEntry {
-    public Block block;
-    public int generationTime;
-
-    public BlockchainEntry(Block block, int generationTime) {
-        this.block = block;
-        this.generationTime = generationTime;
-    }
+/**
+ * Represents an entry in a blockchain.
+ *
+ * This contains a block in the blockchain together with meta-data concerning
+ * the block's creation.
+ *
+ * @param block  A {@link Block} for a blockchain
+ * @param generationTime  the time, in milliseconds, that it took to generate
+ *                        {@code block}
+ */
+public record BlockchainEntry(Block block, long generationTime) {
 }
