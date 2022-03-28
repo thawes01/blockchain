@@ -2,15 +2,14 @@ package Blockchain;
 
 import java.util.*;
 
-public class Blockchain implements Iterable<Block> {
+public class Blockchain implements Iterable<BlockchainEntry> {
     private final String initialHash;
     private Block lastBlock;
-    public int lastBlockGenerationTime;
     private String lastBlockHash;
     private Block penultimateBlock;
     private int length = 0;
-    private final List<Block> blocks = new ArrayList<>();
-    public List<BlockchainEntry> blockchainEntries = new ArrayList<>();
+    public final List<Block> blocks = new ArrayList<>();
+    private final List<BlockchainEntry> blockchainEntries = new ArrayList<>();
     private boolean startingHashCorrect = true;
     private boolean successiveBlockHashesAgree = true;
 
@@ -42,7 +41,6 @@ public class Blockchain implements Iterable<Block> {
     public void push(BlockchainEntry blockchainEntry) {
         blockchainEntries.add(blockchainEntry);
         push(blockchainEntry.block);
-        lastBlockGenerationTime = blockchainEntry.generationTime;
     }
 
     private void updateBlockCaches(Block block) {
@@ -102,8 +100,14 @@ public class Blockchain implements Iterable<Block> {
         return startingHashCorrect && successiveBlockHashesAgree;
     }
 
-    public Iterator<Block> iterator() {
-        return blocks.iterator();
+    /**
+     * Returns an iterator of {@link BlockchainEntry} objects that make up this
+     * blockchain.
+     *
+     * @return  an iterator of blockchain entries
+     */
+    public Iterator<BlockchainEntry> iterator() {
+        return blockchainEntries.iterator();
     }
 
     /**

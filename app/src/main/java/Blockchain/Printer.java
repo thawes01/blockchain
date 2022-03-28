@@ -61,7 +61,7 @@ public class Printer {
 
     private List<String> compileBlockInformationStrings(Blockchain blockchain) {
         List<String> blockInformationStrings = new ArrayList<>();
-        for (var blockchainEntry : blockchain.blockchainEntries) {
+        for (var blockchainEntry : blockchain) {
             Block block = blockchainEntry.block;
             int generationTime = blockchainEntry.generationTime;
             blockInformationStrings.add("Block:\n" + blockInformation(block, generationTime));
