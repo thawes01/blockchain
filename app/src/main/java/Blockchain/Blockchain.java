@@ -36,20 +36,17 @@ public class Blockchain implements Iterable<BlockchainEntry> {
     }
 
     /**
-     * Adds a block to the end of this blockchain.
+     * Adds an entry to the end of this blockchain.
      *
-     * @param block  a block to add to the end of the chain
+     * @param blockchainEntry  a blockchain entry
      */
-    public void push(Block block) {
+    public void add(BlockchainEntry blockchainEntry) {
+        blockchainEntries.add(blockchainEntry);
+        Block block = blockchainEntry.block();
         blocks.add(block);
         updateBlockCaches(block);
         updateLength();
         updateVerification();
-    }
-
-    public void push(BlockchainEntry blockchainEntry) {
-        blockchainEntries.add(blockchainEntry);
-        push(blockchainEntry.block());
     }
 
     private void updateBlockCaches(Block block) {

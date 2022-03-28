@@ -61,7 +61,7 @@ public class BlockchainGenerator {
         Block block = generateNextBlock(blockchain);
         stopClock.stop();
         BlockchainEntry entry = new BlockchainEntry(block, stopClock.getElapsedTime());
-        blockchain.push(entry);
+        blockchain.add(entry);
     }
 
     private Block generateNextBlock(Blockchain blockchain) {

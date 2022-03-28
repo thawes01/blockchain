@@ -38,8 +38,8 @@ public class BlockchainTest {
 
     @Test
     void getBlocksReturnsListOfBlocks() {
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
 
         assertEquals(block1, blockchain.getBlocks().get(0));
         assertEquals(block2, blockchain.getBlocks().get(1));
@@ -51,16 +51,16 @@ public class BlockchainTest {
     }
 
     @Test
-    void pushAddsBlockchainEntryToBlockchain() {
-        blockchain.push(blockchainEntry1);
+    void addAddsBlockchainEntryToBlockchain() {
+        blockchain.add(blockchainEntry1);
 
         assertEquals(blockchainEntry1, blockchain.getLastEntry());
     }
 
     @Test
-    void pushAddsBlockchainEntryToTopOfChain() {
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
+    void addAddsBlockchainEntryToTopOfChain() {
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
 
         assertEquals(blockchainEntry2, blockchain.getLastEntry());
     }
@@ -73,8 +73,8 @@ public class BlockchainTest {
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 12);
 
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
 
         assertTrue(blockchain.validate());
     }
@@ -93,17 +93,17 @@ public class BlockchainTest {
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 12);
 
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
-        blockchain.push(blockchainEntry3);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
+        blockchain.add(blockchainEntry3);
 
         assertFalse(blockchain.validate());
     }
 
     @Test
     void verifyReturnsFalseIfSuccessiveHashesDoNotAgree() {
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2WithCustomHash);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2WithCustomHash);
 
         assertFalse(blockchain.validate());
     }
@@ -114,9 +114,9 @@ public class BlockchainTest {
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 13);
 
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2WithCustomHash);
-        blockchain.push(blockchainEntry3);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2WithCustomHash);
+        blockchain.add(blockchainEntry3);
 
         assertFalse(blockchain.validate());
     }
@@ -131,9 +131,9 @@ public class BlockchainTest {
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 12);
 
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
-        blockchain.push(blockchainEntry3);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
+        blockchain.add(blockchainEntry3);
 
         var blockchainIterator = blockchain.iterator();
 
@@ -148,7 +148,7 @@ public class BlockchainTest {
         for (int i = 0; i < numBlocks; i++) {
             BlockchainEntry blockchainEntry = new BlockchainEntry(
                     BlockCreator.withBasicBlockData(firstBlockData), 12);
-            blockchain.push(blockchainEntry);
+            blockchain.add(blockchainEntry);
         }
 
         assertEquals(numBlocks, blockchain.getLength());
@@ -163,8 +163,8 @@ public class BlockchainTest {
 
     @Test
     void getLastBlockHashReturnsLastBlockHash() {
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2WithCustomHash);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2WithCustomHash);
 
         assertEquals(block2WithCustomHash.computeHash(), blockchain.getLastBlockHash());
     }
@@ -175,8 +175,8 @@ public class BlockchainTest {
         BasicBlockData basicBlockData2 = new BasicBlockData(id, "999");
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 12);
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
 
         assertEquals(block2.getId(), blockchain.getLastBlockId());
     }

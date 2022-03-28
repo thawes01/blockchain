@@ -71,7 +71,7 @@ public class PrinterTest {
         long generationTime = 1500;
         BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
         Blockchain blockchain = new Blockchain(initialHash);
-        blockchain.push(blockchainEntry);
+        blockchain.add(blockchainEntry);
         Printer printer = new Printer(printStream);
 
         String expectedContents = "Block:\n" + blockReport(block, generationTime);
@@ -95,9 +95,9 @@ public class PrinterTest {
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime3);
 
         Blockchain blockchain = new Blockchain(initialHash);
-        blockchain.push(blockchainEntry1);
-        blockchain.push(blockchainEntry2);
-        blockchain.push(blockchainEntry3);
+        blockchain.add(blockchainEntry1);
+        blockchain.add(blockchainEntry2);
+        blockchain.add(blockchainEntry3);
         Printer printer = new Printer(printStream);
 
         String expectedContents = blockchainReport(
