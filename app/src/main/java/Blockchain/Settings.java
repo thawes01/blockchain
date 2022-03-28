@@ -2,6 +2,9 @@ package Blockchain;
 
 import java.io.PrintStream;
 
+/**
+ * Settings that provide the starting point for configuring an application.
+ */
 public class Settings {
 
     /** The print stream to print results to.*/

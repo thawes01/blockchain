@@ -1,5 +1,8 @@
 package Blockchain.core;
 
+/**
+ * Represents the basic data used to create blocks in a blockchain.
+ */
 public class BasicBlockData {
     private final int id;
     private final String previousBlockHash;

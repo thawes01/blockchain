@@ -3,6 +3,10 @@ package Blockchain;
 import Blockchain.core.BlockchainGenerator;
 import Blockchain.io.*;
 
+/**
+ * Responsible for initialising the main objects required for running the
+ * application.
+ */
 public class Configuration {
     public int lengthOfBlockchain;
     public BlockchainGenerator blockchainGenerator;

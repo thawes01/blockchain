@@ -2,6 +2,12 @@ package Blockchain.core;
 
 import Blockchain.utilities.StopClock;
 
+/**
+ * Responsible for generating blockchains.
+ *
+ * The blockchains generated meet certain criteria, such as satisfying
+ * proof-of-work constraints.
+ */
 public class BlockchainGenerator {
     private static final int FIRST_BLOCK_ID = 0;
     private static final String INITIAL_HASH = "0";

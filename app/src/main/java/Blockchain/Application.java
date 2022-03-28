@@ -3,6 +3,10 @@ package Blockchain;
 import Blockchain.core.*;
 import Blockchain.io.Printer;
 
+/**
+ * Represents instances of an application to be run based on a
+ * configuration.
+ */
 public class Application {
     private final Configuration configuration;
 

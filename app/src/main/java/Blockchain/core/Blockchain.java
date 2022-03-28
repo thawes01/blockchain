@@ -3,6 +3,12 @@ package Blockchain.core;
 import Blockchain.exceptions.EmptyBlockchainException;
 import java.util.*;
 
+/**
+ * Represents a blockchain, as a collection of {@link BlockchainEntry}s.
+ *
+ * Each entry of a blockchain consists of blocks together with meta-data about
+ * their generation.
+ */
 public class Blockchain implements Iterable<BlockchainEntry> {
     private final String initialHash;
     private Block lastBlock;

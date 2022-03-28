@@ -2,6 +2,9 @@ package Blockchain.utilities;
 
 import java.time.Clock;
 
+/**
+ * A simple wrapper around {@link Clock} for timing calculations.
+ */
 public class StopClock {
     private final Clock clock;
     private long startTime;

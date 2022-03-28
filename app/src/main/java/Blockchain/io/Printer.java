@@ -4,6 +4,9 @@ import Blockchain.core.*;
 import java.io.PrintStream;
 import java.util.*;
 
+/**
+ * Responsible for generating and displaying reports about blockchains.
+ */
 public class Printer {
     private final PrintStream printStream;
 
