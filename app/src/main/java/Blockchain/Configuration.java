@@ -1,5 +1,6 @@
 package Blockchain;
 
+import Blockchain.core.BlockchainGenerator;
 import Blockchain.io.Printer;
 import Blockchain.io.UserInputs;
 

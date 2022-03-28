@@ -1,9 +1,8 @@
-package Blockchain;
+package Blockchain.coreTest;
 
-import Blockchain.core.Blockchain;
+import Blockchain.core.*;
 import Blockchain.utilities.StopClock;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
@@ -23,7 +22,7 @@ public class BlockchainGeneratorTest {
     void getProofOfWorkNumberReturnsProofOfWorkNumber(int proofOfWorkNumber) {
         BlockchainGenerator blockchainGenerator = new BlockchainGenerator(proofOfWorkNumber);
 
-        assertEquals(proofOfWorkNumber, blockchainGenerator.getProofOfWorkNumber());
+        Assertions.assertEquals(proofOfWorkNumber, blockchainGenerator.getProofOfWorkNumber());
     }
 
     @ParameterizedTest
