@@ -1,5 +1,6 @@
 package Blockchain;
 
+import Blockchain.core.BasicBlockData;
 import Blockchain.utilities.StopClock;
 import Blockchain.utilities.StringUtil;
 

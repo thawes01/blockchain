@@ -1,6 +1,8 @@
 package Blockchain;
 
 import static Blockchain.testUtils.Time.defaultFixedClock;
+
+import Blockchain.core.BasicBlockData;
 import Blockchain.testUtils.BasicBlockDataCreator;
 import Blockchain.utilities.StopClock;
 import Blockchain.utilities.StringUtil;

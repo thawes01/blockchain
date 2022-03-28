@@ -1,5 +1,6 @@
-package Blockchain;
+package Blockchain.coreTest;
 
+import Blockchain.core.BasicBlockData;
 import Blockchain.testUtils.BasicBlockDataCreator;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

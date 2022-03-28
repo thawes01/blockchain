@@ -4,6 +4,7 @@ import static Blockchain.testUtils.Time.defaultFixedClock;
 import static org.junit.jupiter.api.Assertions.*;
 
 import Blockchain.*;
+import Blockchain.core.BasicBlockData;
 import Blockchain.io.Printer;
 import Blockchain.testUtils.BlockCreator;
 import Blockchain.utilities.StopClock;

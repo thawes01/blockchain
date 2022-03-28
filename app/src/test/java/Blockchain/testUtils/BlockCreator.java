@@ -1,6 +1,6 @@
 package Blockchain.testUtils;
 
-import Blockchain.BasicBlockData;
+import Blockchain.core.BasicBlockData;
 import Blockchain.Block;
 import Blockchain.utilities.StopClock;
 

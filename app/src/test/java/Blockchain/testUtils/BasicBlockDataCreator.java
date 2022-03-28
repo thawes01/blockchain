@@ -1,6 +1,6 @@
 package Blockchain.testUtils;
 
-import Blockchain.BasicBlockData;
+import Blockchain.core.BasicBlockData;
 
 public class BasicBlockDataCreator {
     private static final int DUMMY_ID = 0;
