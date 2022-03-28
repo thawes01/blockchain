@@ -32,10 +32,12 @@ public class Printer {
      * @param blockchainEntry  a blockchain entry to print information about
      */
     public void print(BlockchainEntry blockchainEntry) {
-        printStream.print(blockInformation(blockchainEntry.block, blockchainEntry.generationTime));
+        printStream.print(report(blockchainEntry));
     }
 
-    private String blockInformation(Block block, int generationTime) {
+    private String report(BlockchainEntry blockchainEntry) {
+        Block block = blockchainEntry.block;
+        int generationTime = blockchainEntry.generationTime;
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +
@@ -52,19 +54,17 @@ public class Printer {
      * @param blockchain  a blockchain to print information about.
      */
     public void print(Blockchain blockchain) {
-        printStream.print(blockchainInformation(blockchain));
+        printStream.print(report(blockchain));
     }
 
-    private String blockchainInformation(Blockchain blockchain) {
-        return String.join("\n", compileBlockInformationStrings(blockchain));
+    private String report(Blockchain blockchain) {
+        return String.join("\n", compileBlockchainEntryReports(blockchain));
     }
 
-    private List<String> compileBlockInformationStrings(Blockchain blockchain) {
+    private List<String> compileBlockchainEntryReports(Blockchain blockchain) {
         List<String> blockInformationStrings = new ArrayList<>();
         for (var blockchainEntry : blockchain) {
-            Block block = blockchainEntry.block;
-            int generationTime = blockchainEntry.generationTime;
-            blockInformationStrings.add("Block:\n" + blockInformation(block, generationTime));
+            blockInformationStrings.add("Block:\n" + report(blockchainEntry));
         }
         return blockInformationStrings;
     }
