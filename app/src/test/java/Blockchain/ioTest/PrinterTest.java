@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import Blockchain.*;
 import Blockchain.core.BasicBlockData;
+import Blockchain.core.Block;
 import Blockchain.io.Printer;
 import Blockchain.testUtils.BlockCreator;
 import Blockchain.utilities.StopClock;

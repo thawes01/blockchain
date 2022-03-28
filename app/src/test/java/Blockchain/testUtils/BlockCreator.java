@@ -1,7 +1,7 @@
 package Blockchain.testUtils;
 
 import Blockchain.core.BasicBlockData;
-import Blockchain.Block;
+import Blockchain.core.Block;
 import Blockchain.utilities.StopClock;
 
 public class BlockCreator {

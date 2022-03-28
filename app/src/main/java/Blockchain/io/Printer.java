@@ -1,6 +1,6 @@
 package Blockchain.io;
 
-import Blockchain.Block;
+import Blockchain.core.Block;
 import Blockchain.Blockchain;
 import Blockchain.BlockchainEntry;
 

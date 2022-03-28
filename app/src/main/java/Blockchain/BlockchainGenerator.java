@@ -1,6 +1,7 @@
 package Blockchain;
 
 import Blockchain.core.BasicBlockData;
+import Blockchain.core.Block;
 import Blockchain.utilities.StopClock;
 
 public class BlockchainGenerator {

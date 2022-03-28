@@ -1,5 +1,6 @@
 package Blockchain;
 
+import Blockchain.core.Block;
 import Blockchain.exceptions.EmptyBlockchainException;
 
 import java.util.*;
