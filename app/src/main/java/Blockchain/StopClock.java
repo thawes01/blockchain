@@ -40,4 +40,14 @@ public class StopClock {
     public long now() {
         return clock.millis();
     }
+
+    public void start() {
+    }
+
+    public void stop() {
+    }
+
+    public int getElapsedTime() {
+        return 12345;
+    }
 }

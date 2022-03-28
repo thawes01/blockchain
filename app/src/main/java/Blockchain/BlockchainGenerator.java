@@ -3,7 +3,7 @@ package Blockchain;
 public class BlockchainGenerator {
     private static final int FIRST_BLOCK_ID = 0;
     private static final String INITIAL_HASH = "0";
-    private final StopClock stopClock = StopClock.systemUTC();
+    private final StopClock stopClock;
     private final int proofOfWorkNumber;
 
     /**
@@ -27,6 +27,11 @@ public class BlockchainGenerator {
      *                          for each block in the blockchain
      */
     public BlockchainGenerator(int proofOfWorkNumber) {
+        this(proofOfWorkNumber, StopClock.systemUTC());
+    }
+
+    public BlockchainGenerator(int proofOfWorkNumber, StopClock stopClock) {
+        this.stopClock = stopClock;
         this.proofOfWorkNumber = proofOfWorkNumber;
     }
 
@@ -52,8 +57,11 @@ public class BlockchainGenerator {
     }
 
     private void generateAndAddNextBlock(Blockchain blockchain) {
+        stopClock.start();
         Block block = generateNextBlock(blockchain);
-        blockchain.push(block);
+        stopClock.stop();
+        BlockchainEntry entry = new BlockchainEntry(block, stopClock.getElapsedTime());
+        blockchain.push(entry);
     }
 
     private Block generateNextBlock(Blockchain blockchain) {
