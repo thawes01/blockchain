@@ -102,43 +102,4 @@ public class PrinterTest {
         }
         return String.join("\n", blockInformationStrings);
     }
-
-    @Test
-    void printWritesBlockGenerationRecordsWithMultipleRecordsInExpectedFormat() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        int generationTime1 = 12;
-
-        Block block2 = BlockCreator.withCreationTimestamp(1L);
-        int generationTime2 = 13;
-
-        Block block3 = BlockCreator.withCreationTimestamp(2L);
-        int generationTime3 = 14;
-
-        BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, generationTime1);
-        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, generationTime2);
-        BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, generationTime3);
-
-        BlockchainEntry[] blockchainEntries = new BlockchainEntry[] {
-                blockchainEntry1,
-                blockchainEntry2,
-                blockchainEntry3
-        };
-        Printer printer = new Printer(printStream, generationTime);
-
-        String expectedContents = blockchainReport(blockchainEntries);
-        printer.print(blockchainEntries);
-        String printContents = outputStream.toString();
-        assertEquals(expectedContents, printContents);
-    }
-
-    private String blockchainReport(BlockchainEntry... records) {
-        String[] blockInformationStrings = new String[records.length];
-        for (int i = 0; i < records.length; i++) {
-            Block block = records[i].block;
-            int generationTime = records[i].generationTime;
-            blockInformationStrings[i] = "Block:\n" +
-                    blockReport(block, generationTime);
-        }
-        return String.join("\n", blockInformationStrings);
-    }
 }
