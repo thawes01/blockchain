@@ -1,6 +1,5 @@
 package Blockchain.coreTest;
 
-import Blockchain.core.Blockchain;
 import Blockchain.core.*;
 import Blockchain.exceptions.EmptyBlockchainException;
 import Blockchain.testUtils.*;

@@ -1,9 +1,7 @@
 package Blockchain;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import Blockchain.core.Blockchain;
-import Blockchain.core.BlockchainGenerator;
+import Blockchain.core.*;
 import Blockchain.io.Printer;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;

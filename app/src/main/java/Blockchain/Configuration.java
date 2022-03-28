@@ -1,8 +1,7 @@
 package Blockchain;
 
 import Blockchain.core.BlockchainGenerator;
-import Blockchain.io.Printer;
-import Blockchain.io.UserInputs;
+import Blockchain.io.*;
 
 public class Configuration {
     public int lengthOfBlockchain;

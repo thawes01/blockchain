@@ -2,9 +2,7 @@ package Blockchain.ioTest;
 
 import Blockchain.io.UserInputs;
 import org.junit.jupiter.api.*;
-
 import java.io.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 // Approach to simulating System.in and System.out adapted from

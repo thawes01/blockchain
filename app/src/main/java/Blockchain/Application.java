@@ -1,7 +1,6 @@
 package Blockchain;
 
-import Blockchain.core.Blockchain;
-import Blockchain.core.BlockchainGenerator;
+import Blockchain.core.*;
 import Blockchain.io.Printer;
 
 public class Application {
