@@ -1,5 +1,9 @@
 package Blockchain.exceptions;
 
+/**
+ * An exception thrown when an operation is attempted on an empty blockchain
+ * that is not valid.
+ */
 public class EmptyBlockchainException extends RuntimeException {
 
     /**

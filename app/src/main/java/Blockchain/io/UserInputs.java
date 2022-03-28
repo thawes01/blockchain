@@ -2,6 +2,9 @@ package Blockchain.io;
 
 import java.util.Scanner;
 
+/**
+ * Responsible for obtaining input from the user via standard input.
+ */
 public class UserInputs {
     private static final String initialPrompt = "Enter how many zeros the hash must start with";
     private static final String rePrompt = initialPrompt + " (must be a non-negative integer)";

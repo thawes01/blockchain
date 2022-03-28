@@ -2,6 +2,13 @@ package Blockchain.core;
 
 import Blockchain.utilities.*;
 
+/**
+ * Represents a block in a blockchain.
+ *
+ * Consists of basic block data (see {@link BasicBlockData}), information about
+ * the time the block was created and data derived from this, such as a hash
+ * for the block.
+ */
 public class Block {
     private final BasicBlockData basicBlockData;
     private final long creationTimestamp;

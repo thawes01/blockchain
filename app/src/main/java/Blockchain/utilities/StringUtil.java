@@ -18,6 +18,10 @@ package Blockchain.utilities;
 
 import java.security.MessageDigest;
 
+/**
+ * A utility class for performing string calculations, such as computing hash
+ * digests.
+ */
 public class StringUtil {
     /* Applies Sha256 to a string and returns a hash. */
     public static String applySha256(String input){
