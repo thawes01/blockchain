@@ -111,7 +111,7 @@ public class PrinterTest {
         for (int i = 0; i < blockchainEntries.length; i++) {
             BlockchainEntry entry = blockchainEntries[i];
             blockInformationStrings[i] = "Block:\n" +
-                    blockReport(entry.block, entry.generationTime);
+                    blockReport(entry.block(), entry.generationTime());
         }
         return String.join("\n", blockInformationStrings);
     }

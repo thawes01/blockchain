@@ -40,7 +40,7 @@ public class Blockchain implements Iterable<BlockchainEntry> {
 
     public void push(BlockchainEntry blockchainEntry) {
         blockchainEntries.add(blockchainEntry);
-        push(blockchainEntry.block);
+        push(blockchainEntry.block());
     }
 
     private void updateBlockCaches(Block block) {
