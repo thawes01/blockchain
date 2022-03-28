@@ -1,6 +1,4 @@
-package Blockchain;
-
-import Blockchain.core.Block;
+package Blockchain.core;
 
 /**
  * Represents an entry in a blockchain.

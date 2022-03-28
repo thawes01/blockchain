@@ -2,7 +2,7 @@ package Blockchain.io;
 
 import Blockchain.core.Block;
 import Blockchain.Blockchain;
-import Blockchain.BlockchainEntry;
+import Blockchain.core.BlockchainEntry;
 
 import java.io.PrintStream;
 import java.util.*;
