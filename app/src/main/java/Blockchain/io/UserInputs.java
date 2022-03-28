@@ -1,4 +1,4 @@
-package Blockchain;
+package Blockchain.io;
 
 import java.util.Scanner;
 

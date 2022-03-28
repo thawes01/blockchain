@@ -1,5 +1,6 @@
-package Blockchain;
+package Blockchain.ioTest;
 
+import Blockchain.io.UserInputs;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
