@@ -12,6 +12,9 @@ public class BlockchainTest {
     private final String initialHash = "000";
     private final int firstBlockId = 0;
     private final BasicBlockData firstBlockData = new BasicBlockData(firstBlockId, initialHash);
+    private final Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
+    private final Block block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
+    private final Block block2dummyHash = BlockCreator.withBasicBlockData(new BasicBlockData(1, "999"));
 
     @BeforeEach
     void setUpBlockchain() {
@@ -20,8 +23,6 @@ public class BlockchainTest {
 
     @Test
     void getBlocksReturnsListOfBlocks() {
-        Block block1 = BlockCreator.withDefaultArgs();
-        Block block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
         blockchain.push(block1);
         blockchain.push(block2);
 
@@ -31,16 +32,13 @@ public class BlockchainTest {
 
     @Test
     void pushAddsBlockToBlockchain() {
-        Block block = BlockCreator.withDefaultArgs();
-        blockchain.push(block);
+        blockchain.push(block1);
 
-        assertEquals(block, blockchain.peek());
+        assertEquals(block1, blockchain.peek());
     }
 
     @Test
     void pushAddsBlockToTopOfChain() {
-        Block block1 = BlockCreator.withDefaultArgs();
-        Block block2 = BlockCreator.withBasicBlockData(BasicBlockDataCreator.withId(1));
         blockchain.push(block1);
         blockchain.push(block2);
 
@@ -51,7 +49,6 @@ public class BlockchainTest {
     @DisplayName("If first block in chain has correct value as previous hash and" +
             "successive block hashes agree then verify returns true")
     void verifyReturnsTrueIfAllConditionsSatisfied() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
         BasicBlockData basicBlockData2 = new BasicBlockData(1, block1.computeHash());
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         blockchain.push(block1);
@@ -77,24 +74,18 @@ public class BlockchainTest {
 
     @Test
     void verifyReturnsFalseIfSuccessiveHashesDoNotAgree() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        BasicBlockData basicBlockData2 = new BasicBlockData(1, "999");
-        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         blockchain.push(block1);
-        blockchain.push(block2);
+        blockchain.push(block2dummyHash);
 
         assertFalse(blockchain.validate());
     }
 
     @Test
     void verifyReturnsFalseIfThreeBlocksSuccessiveHashesDoNotAgree() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        BasicBlockData basicBlockData2 = new BasicBlockData(1, "999");
-        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
-        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2.computeHash());
+        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2dummyHash.computeHash());
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         blockchain.push(block1);
-        blockchain.push(block2);
+        blockchain.push(block2dummyHash);
         blockchain.push(block3);
 
         assertFalse(blockchain.validate());
@@ -102,14 +93,11 @@ public class BlockchainTest {
 
     @Test
     void iteratorYieldsBlockchainEntriesFromBlockchainInOrder() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
         BlockchainEntry blockchainEntry1 = new BlockchainEntry(block1, 10);
 
-        BasicBlockData basicBlockData2 = new BasicBlockData(1, "999");
-        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
-        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2, 11);
+        BlockchainEntry blockchainEntry2 = new BlockchainEntry(block2dummyHash, 11);
 
-        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2.computeHash());
+        BasicBlockData basicBlockData3 = new BasicBlockData(2, block2dummyHash.computeHash());
         Block block3 = BlockCreator.withBasicBlockData(basicBlockData3);
         BlockchainEntry blockchainEntry3 = new BlockchainEntry(block3, 12);
 
@@ -143,19 +131,15 @@ public class BlockchainTest {
 
     @Test
     void getLastBlockHashReturnsLastBlockHash() {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
-        BasicBlockData basicBlockData2 = new BasicBlockData(1, "999");
-        Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         blockchain.push(block1);
-        blockchain.push(block2);
+        blockchain.push(block2dummyHash);
 
-        assertEquals(block2.computeHash(), blockchain.getLastBlockHash());
+        assertEquals(block2dummyHash.computeHash(), blockchain.getLastBlockHash());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
     void getLastBlockIdReturnsLastBlockIdOfNonemptyBlockchain(int id) {
-        Block block1 = BlockCreator.withBasicBlockData(firstBlockData);
         BasicBlockData basicBlockData2 = new BasicBlockData(id, "999");
         Block block2 = BlockCreator.withBasicBlockData(basicBlockData2);
         blockchain.push(block1);
