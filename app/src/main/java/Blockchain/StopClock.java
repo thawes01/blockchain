@@ -47,7 +47,7 @@ public class StopClock {
     public void stop() {
     }
 
-    public int getElapsedTime() {
+    public long getElapsedTime() {
         return 12345;
     }
 }

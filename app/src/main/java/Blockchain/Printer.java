@@ -37,7 +37,7 @@ public class Printer {
 
     private String report(BlockchainEntry blockchainEntry) {
         Block block = blockchainEntry.block();
-        int generationTime = blockchainEntry.generationTime();
+        long generationTime = blockchainEntry.generationTime();
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +

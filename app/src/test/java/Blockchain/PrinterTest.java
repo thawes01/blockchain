@@ -55,7 +55,7 @@ public class PrinterTest {
         assertEquals(expectedContents, printContents);
     }
 
-    private String blockReport(Block block, int generationDuration) {
+    private String blockReport(Block block, long generationDuration) {
         return String.format("Id: %d\n", block.getId()) +
                 String.format("Timestamp: %s\n", block.getCreationTimestamp()) +
                 String.format("Magic number: %s\n", block.getMagicNumber()) +

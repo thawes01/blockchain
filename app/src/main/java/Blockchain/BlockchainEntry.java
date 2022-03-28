@@ -1,4 +1,4 @@
 package Blockchain;
 
-public record BlockchainEntry(Block block, int generationTime) {
+public record BlockchainEntry(Block block, long generationTime) {
 }
