@@ -1,11 +1,9 @@
-package Blockchain;
+package Blockchain.coreTest;
 
-import Blockchain.core.BasicBlockData;
-import Blockchain.core.Block;
-import Blockchain.core.BlockchainEntry;
+import Blockchain.core.Blockchain;
+import Blockchain.core.*;
 import Blockchain.exceptions.EmptyBlockchainException;
-import Blockchain.testUtils.BlockCreator;
-import Blockchain.testUtils.BasicBlockDataCreator;
+import Blockchain.testUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;

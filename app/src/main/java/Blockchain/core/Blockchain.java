@@ -1,9 +1,6 @@
-package Blockchain;
+package Blockchain.core;
 
-import Blockchain.core.Block;
-import Blockchain.core.BlockchainEntry;
 import Blockchain.exceptions.EmptyBlockchainException;
-
 import java.util.*;
 
 public class Blockchain implements Iterable<BlockchainEntry> {
