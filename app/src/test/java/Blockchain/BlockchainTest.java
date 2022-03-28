@@ -1,5 +1,6 @@
 package Blockchain;
 
+import Blockchain.exceptions.EmptyBlockchainException;
 import Blockchain.testUtils.BlockCreator;
 import Blockchain.testUtils.BasicBlockDataCreator;
 import static org.junit.jupiter.api.Assertions.*;

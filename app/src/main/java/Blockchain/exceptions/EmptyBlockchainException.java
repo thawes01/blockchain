@@ -1,4 +1,4 @@
-package Blockchain;
+package Blockchain.exceptions;
 
 public class EmptyBlockchainException extends RuntimeException {
 
