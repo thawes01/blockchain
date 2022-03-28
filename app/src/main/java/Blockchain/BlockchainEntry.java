@@ -1,10 +1,10 @@
 package Blockchain;
 
-public class BlockGenerationRecord {
+public class BlockchainEntry {
     public Block block;
     public int generationTime;
 
-    public BlockGenerationRecord(Block block, int generationTime) {
+    public BlockchainEntry(Block block, int generationTime) {
         this.block = block;
         this.generationTime = generationTime;
     }

@@ -69,23 +69,23 @@ public class Printer {
         return blockInformationStrings;
     }
 
-    public void print(BlockGenerationRecord... blockGenerationRecords) {
-        String report = compileBlockGenerationRecordsReport(blockGenerationRecords);
+    public void print(BlockchainEntry... blockchainEntries) {
+        String report = compileBlockGenerationRecordsReport(blockchainEntries);
         printStream.print(report);
     }
 
-    private String compileBlockGenerationRecordsReport(BlockGenerationRecord... blockGenerationRecords) {
-        String[] blockInformationStrings = new String[blockGenerationRecords.length];
-        for (int i = 0; i < blockGenerationRecords.length; i++) {
+    private String compileBlockGenerationRecordsReport(BlockchainEntry... blockchainEntries) {
+        String[] blockInformationStrings = new String[blockchainEntries.length];
+        for (int i = 0; i < blockchainEntries.length; i++) {
             blockInformationStrings[i] = "Block:\n" +
-                    compileBlockGenerationRecordReport(blockGenerationRecords[i]);
+                    compileBlockGenerationRecordReport(blockchainEntries[i]);
         }
         return String.join("\n", blockInformationStrings);
     }
 
-    private String compileBlockGenerationRecordReport(BlockGenerationRecord blockGenerationRecord) {
-        Block block = blockGenerationRecord.block;
-        int generationTime = blockGenerationRecord.generationTime;
+    private String compileBlockGenerationRecordReport(BlockchainEntry blockchainEntry) {
+        Block block = blockchainEntry.block;
+        int generationTime = blockchainEntry.generationTime;
         return blockInformation(block, generationTime);
     }
 }
