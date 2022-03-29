@@ -67,22 +67,27 @@ public class BlockchainGenerator {
     public Blockchain generate(int numBlocks) {
         Blockchain blockchain = new Blockchain(INITIAL_HASH);
         for (int i = 0; i < numBlocks; i++) {
-            generateAndAddNextBlock(blockchain);
+            addNewEntry(blockchain);
         }
         return blockchain;
     }
 
-    private void generateAndAddNextBlock(Blockchain blockchain) {
-        stopClock.start();
-        Block block = generateNextBlock(blockchain);
-        stopClock.stop();
+    private void addNewEntry(Blockchain blockchain) {
+        Block block = generateNewBlockWithTiming(blockchain);
         BlockchainEntry entry = new BlockchainEntry(block, stopClock.getElapsedTime());
         blockchain.add(entry);
     }
 
+    private Block generateNewBlockWithTiming(Blockchain blockchain) {
+        stopClock.start();
+        Block block = generateNextBlock(blockchain);
+        stopClock.stop();
+        return block;
+    }
+
     private Block generateNextBlock(Blockchain blockchain) {
         BasicBlockData basicBlockData = nextBasicBlockData(blockchain);
-        Block block = new Block(basicBlockData, stopClock);
+        Block block = new Block(basicBlockData, stopClock.getStartTime());
         block.findMagicNumber(proofOfWorkNumber);
         return block;
     }

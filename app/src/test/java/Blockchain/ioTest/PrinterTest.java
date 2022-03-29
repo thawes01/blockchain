@@ -45,9 +45,8 @@ public class PrinterTest {
     void printReportsSingleBlockchainEntryInExpectedFormat(int id, long creationTimestamp,
                                               String previousBlockHash,
                                               long generationTime) {
-        StopClock stopClock = new StopClock(defaultFixedClock(creationTimestamp));
         BasicBlockData basicBlockData = new BasicBlockData(id, previousBlockHash);
-        Block block = new Block(basicBlockData, stopClock);
+        Block block = new Block(basicBlockData, creationTimestamp);
         BlockchainEntry blockchainEntry = new BlockchainEntry(block, generationTime);
         Printer printer = new Printer(printStream);
 

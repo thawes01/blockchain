@@ -72,6 +72,7 @@ public class BlockchainGeneratorTest {
 
         // Check stop clock used as expected for each block in the chain
         Mockito.verify(stopClock, Mockito.times(blockchainLength)).start();
+        Mockito.verify(stopClock, Mockito.times(blockchainLength)).getStartTime();
         Mockito.verify(stopClock, Mockito.times(blockchainLength)).stop();
         Mockito.verify(stopClock, Mockito.times(blockchainLength)).getElapsedTime();
     }

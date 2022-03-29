@@ -17,13 +17,16 @@ public class Block {
     /**
      * Allocates a {@code Block} in a blockchain.
      *
+     * Creation timestamps are expected to be in milliseconds since the start of
+     * the epoch, as returned by e.g. {@link StopClock#now()}.
+     *
      * @param basicBlockData  the data contained within the block, from which
      *                        the block's hash is generated
-     * @param stopClock  used to record the time of the block's creation
+     * @param creationTimestamp  the time of the block's creation
      */
-    public Block(BasicBlockData basicBlockData, StopClock stopClock) {
+    public Block(BasicBlockData basicBlockData, long creationTimestamp) {
         this.basicBlockData = basicBlockData;
-        this.creationTimestamp = stopClock.now();
+        this.creationTimestamp = creationTimestamp;
         this.magicNumber = -1;
     }
 
