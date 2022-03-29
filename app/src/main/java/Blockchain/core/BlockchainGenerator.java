@@ -87,7 +87,7 @@ public class BlockchainGenerator {
 
     private Block generateNextBlock(Blockchain blockchain) {
         BasicBlockData basicBlockData = nextBasicBlockData(blockchain);
-        Block block = new Block(basicBlockData, stopClock);
+        Block block = new Block(basicBlockData, stopClock.getStartTime());
         block.findMagicNumber(proofOfWorkNumber);
         return block;
     }
