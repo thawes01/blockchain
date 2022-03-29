@@ -15,7 +15,13 @@ Author: Thomas Hawes, with code snippets obtained from the
 
 * [No licence](#no-licence)
 
+* [Dependencies](#dependencies)
+
 * [Running the app](#running-the-app)
+
+  - [Run with Gradle](#run-with-gradle)
+  - [Generate JAR file](#generate-jar-file)
+  - [Generate a distribution with executable](#generate-a-distribution-with-executable)
 
 
 ## Overview
@@ -29,7 +35,8 @@ knowledge.
 
 ### Skills demonstrated
 
-* Test driven development was used to develop the code.
+* The author is currently learning test driven development and elements of this
+  practice have been applied in the development of the code.
 * Unit testing with Junit 5. Some tests also feature mocking with Mockito.
 * Basic use of Gradle for automated builds and dependency management.
 
@@ -38,56 +45,76 @@ knowledge.
 
 The _Blockchain_ application generates blockchains, printing information about
 them to standard output. Each block in the blockchain has an ID, a timestamp
-representing the time the block was created, the SHA-256 hash of the previous
-block in the chain and the hash of the block itself. An example of the output
-is as follows:
+representing the time the block was created (as the number of milliseconds since
+the standard Java epoch 1970-01-01 00:00:00), the SHA-256 hash of the previous
+block in the chain and the hash of the block itself.
+
+A _proof of work_ number is supplied by the user at the beginning of the
+application. This is the number of zeros each block's hash should begin with, in
+order to prove the work done to find a block to add to the blockchain. Each
+block has a _magic number_ – a number found to make the block's hash
+satisfy this proof of work criteria. The time taken to generate the block is
+also displayed.
+
+An example of the output is as follows:
 
 ```text
+Enter how many zeros the hash must start with: 5
+
 Block:
 Id: 0
-Timestamp: 1645649962310
+Timestamp: 1648548985747
+Magic number: 110846
 Hash of the previous block:
 0
 Hash of the block:
-4c23fd2ca2878297a485de75aff812261678be3696d9a1c7b01482b434e7944f
+00000b866187b67ecc142c9bfe6317cc8e05c53605ca9db2f44e42ae6129703d
+Block was generating for 0 seconds
 
 Block:
 Id: 1
-Timestamp: 1645649962331
+Timestamp: 1648548985936
+Magic number: 1094612
 Hash of the previous block:
-4c23fd2ca2878297a485de75aff812261678be3696d9a1c7b01482b434e7944f
+00000b866187b67ecc142c9bfe6317cc8e05c53605ca9db2f44e42ae6129703d
 Hash of the block:
-7db091e487c1b68b46c2c5e29a52087859ff146075ad8f47927a3d25736def17
+00000d41f9da43e9588c5aceda599a01f55a98f2bea232c51db80e357c981ebf
+Block was generating for 1 seconds
 
 Block:
 Id: 2
-Timestamp: 1645649962332
+Timestamp: 1648548987125
+Magic number: 261068
 Hash of the previous block:
-7db091e487c1b68b46c2c5e29a52087859ff146075ad8f47927a3d25736def17
+00000d41f9da43e9588c5aceda599a01f55a98f2bea232c51db80e357c981ebf
 Hash of the block:
-0139dc5e1bca0a56e7c00019e426e09d9f6b9828c0bb3630108f586286975104
+00000b42eff5ca8e2fd83fdbe9ebe199ad7966be18a80eb0b0c03e5118a325c0
+Block was generating for 0 seconds
 
 Block:
 Id: 3
-Timestamp: 1645649962332
+Timestamp: 1648548987405
+Magic number: 679056
 Hash of the previous block:
-0139dc5e1bca0a56e7c00019e426e09d9f6b9828c0bb3630108f586286975104
+00000b42eff5ca8e2fd83fdbe9ebe199ad7966be18a80eb0b0c03e5118a325c0
 Hash of the block:
-0922bfc06b59ca5822070a807195ed784a7919a0aa9d51434bce56f7907e29a6
+00000f7db971a0350aa8f8ffff4711772c2d5d12295bb89b24217a0d1c6dfa44
+Block was generating for 1 seconds
 
 Block:
 Id: 4
-Timestamp: 1645649962332
+Timestamp: 1648548988129
+Magic number: 2423074
 Hash of the previous block:
-0922bfc06b59ca5822070a807195ed784a7919a0aa9d51434bce56f7907e29a6
+00000f7db971a0350aa8f8ffff4711772c2d5d12295bb89b24217a0d1c6dfa44
 Hash of the block:
-3ee148b0b67ca5c1856dc95307faea0fa110d7ea6561b3db155357176921abab
-
+000008fba38ef646ca7a90db6d200cd35d3c52a4645898fe79f65949c7818482
+Block was generating for 3 seconds
 ```
 
 ## No licence
 
-  **This repository deliberately contains no licence.** This is because it contains
+**This repository deliberately contains no licence.** This is because it contains
 code samples taken from the JetBrains Academy platform, which are provided for
 non-commercial use. References to the origin of such code samples are made in
 the relevant source code files.
@@ -101,6 +128,11 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+## Dependencies
+
+A local installation of a Java Development Kit is required to run _Blockchain_.
 
 
 ## Running the app
