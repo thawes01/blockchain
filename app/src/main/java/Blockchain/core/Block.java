@@ -22,8 +22,12 @@ public class Block {
      * @param stopClock  used to record the time of the block's creation
      */
     public Block(BasicBlockData basicBlockData, StopClock stopClock) {
+        this(basicBlockData, stopClock.now());
+    }
+
+    public Block(BasicBlockData basicBlockData, long creationTimestamp) {
         this.basicBlockData = basicBlockData;
-        this.creationTimestamp = stopClock.now();
+        this.creationTimestamp = creationTimestamp;
         this.magicNumber = -1;
     }
 
