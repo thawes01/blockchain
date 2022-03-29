@@ -18,5 +18,5 @@ public class Settings {
      * a block's hash to prove the work of generating the block. If negative,
      * then this number will be obtained from the user via standard input.
      */
-    public int proofOfWorkNumber = 4;
+    public int proofOfWorkNumber = -1;
 }
