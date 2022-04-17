@@ -129,10 +129,10 @@ a local Java distribution. Generate the JAR file using the following command:
 ```shell
 ./gradlew jar
 ```
-This will generate the file in `./app/build/libs/app-0.1.3.jar`, which can be
+This will generate the file in `./app/build/libs/app-0.1.4.jar`, which can be
 run in the usual way:
 ```shell
-java -jar app/build/libs/app-0.1.3.jar
+java -jar app/build/libs/app-0.1.4.jar
 ```
 
 
@@ -144,7 +144,7 @@ distribution by running
 ```shell
 ./gradlew assemble
 ```
-This will generate archives `app-0.1.3.tar` and `app-0.1.3.zip` of the
+This will generate archives `app-0.1.4.tar` and `app-0.1.4.zip` of the
 application in the directory `./app/build/distributions`. Unpack the archive of
 your choice and then run the `bin/app` shell script (or `bin\app.batch` script)
 within. 
